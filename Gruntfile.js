@@ -152,7 +152,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'template',
                     src: '**/*.md',
-                    dest: BUILD_DIR + 'html/',
+                    dest: BUILD_DIR,
                     ext: '.html'
                 }]
             }
