@@ -21,6 +21,9 @@ module.exports = function(grunt) {
     });
     const toulun = grunt.file.readJSON('_data/index.json');
 
+
+    var blogList = [];
+
     grunt.initConfig({
         jshint: {
             check: {
@@ -79,7 +82,7 @@ module.exports = function(grunt) {
                 //flatten: true,
                 expand: true,
                 cwd: 'template',
-                src: ['common/*.html', '*-parent.html'],
+                src: ['common/*.html', '*-parent.html',"index.html"],
                 dest: BUILD_DIR
             }
         },
@@ -104,7 +107,7 @@ module.exports = function(grunt) {
                 force: true
             },
             built: [BUILD_DIR + "*", "**/._*"],
-            useless:['web/common','web/*-parent.html']
+            useless: ['web/common', 'web/*-parent.html']
         },
         htmlmin: {
             options: {
@@ -157,17 +160,26 @@ module.exports = function(grunt) {
         },
         list: {
             all: {
-                src: [BUILD_DIR + 'blog/**/*.{md,html}']
+                src: [BUILD_DIR + 'blog/**/*.html']
             }
         },
         swig: {
-            all: {
+            blog: {
                 files: [{
                     expand: true,
                     cwd: BUILD_DIR,
                     src: 'blog/**/*.html',
                     dest: BUILD_DIR
                 }]
+            },
+            index: {
+                src: BUILD_DIR + "index.html",
+                dest: BUILD_DIR + "index.html",
+                data: function(){
+                    return {
+                        blogs: blogList
+                    };
+                }
             }
         },
         markdown: {
@@ -178,7 +190,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'template',
-                    src: '**/*.md',
+                    src: 'blog/**/*.md',
                     dest: BUILD_DIR,
                     ext: '.html'
                 }]
@@ -205,7 +217,6 @@ module.exports = function(grunt) {
 
         this.files.forEach(function(f) {
             var src = f.src.filter(function(filepath) {
-                // Warn on and remove invalid source files (if nonull was set).
                 if (!grunt.file.exists(filepath)) {
                     grunt.log.warn('Source file "' + filepath + '" not found.');
                     return false;
@@ -215,7 +226,7 @@ module.exports = function(grunt) {
             }).map(function(filepath) {
                 var content = grunt.file.read(filepath);
                 var matches = content.match(/<h(\d) .*?>([\s\S]+?)<\/h\1>/);
-                if (!matches || !matches[2]) return content
+                if (!matches || !matches[2]) return content;
                 return content.replace(/<title>[\s\S]+?<\/title>/, '<title>' + matches[2] + '    ——yanni4night.com</title>');
             }).join('');
 
@@ -226,24 +237,34 @@ module.exports = function(grunt) {
 
 
     grunt.registerMultiTask('list', 'get blog list', function() {
-        var list = [];
         this.files.forEach(function(f) {
-            list = list.concat(f.src.map(function(filepath) {
-                return filepath.replace(/^web/, '');
+            blogList = blogList.concat(f.src.map(function(filepath) {
+
+                var content = grunt.file.read(filepath);
+                var matches = content.match(/<h(\d) .*?>([\s\S]+?)<\/h\1>/);
+                if (!matches || !matches[2]) {
+                    return {};
+                }
+
+                return {
+                    path: filepath.replace(/^web/, ''),
+                    title: matches[2]
+                };
             }));
         });
-        grunt.log.warn(list);
     });
 
 
     grunt.registerMultiTask('swig', 'twig', function() {
-
-
+        var data = this.data.data;
+        if('function'===typeof data){
+            data = data();
+        }
         this.files.forEach(function(f) {
 
             var src = f.src.map(function(filepath) {
                 var template = swig.compileFile(filepath.replace(BUILD_DIR, ''));
-                return template({});
+                return template(data || {});
             }).join('');
 
             grunt.file.write(f.dest, src);
@@ -252,8 +273,7 @@ module.exports = function(grunt) {
 
     });
 
-
-    grunt.registerTask('default', ['clean', 'less', 'imagemin', 'markdown', 'stamp', 'regex-replace', 'htmlmin', 'title']);
     grunt.registerTask('server', ['express']);
-    grunt.registerTask('default', ['clean:built','less', 'imagemin','copy', 'markdown', 'swig','clean:useless','stamp', 'htmlmin', 'title']);
+    grunt.registerTask('default', ['clean:built', 'less', 'imagemin', 'copy', 'markdown', 'swig:blog', 'list', 'swig:index', 'clean:useless', 'stamp', 'htmlmin', 'title']);
+    grunt.registerTask('listfiles', ['list']);
 };

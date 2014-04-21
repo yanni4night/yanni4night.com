@@ -1,1 +1,1 @@
-fun
+##native function in javascript
