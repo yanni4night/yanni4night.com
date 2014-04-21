@@ -82,7 +82,7 @@ module.exports = function(grunt) {
                 //flatten: true,
                 expand: true,
                 cwd: 'template',
-                src: ['common/*.html', '*-parent.html',"index.html"],
+                src: ['common/*.html', '*-parent.html', "index.html"],
                 dest: BUILD_DIR
             }
         },
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
         },
         watch: {
             build: {
-                files: ['static/js/*.js', 'static/css/*.{less,css}', 'template/**/*.md', '_data/*.json', "lib/**/*"],
+                files: ['static/js/*.js', 'static/css/*.{less,css}', 'template/**/*.{md,html}', '_data/*.json', "lib/**/*"],
                 tasks: ['default']
             }
         },
@@ -175,7 +175,7 @@ module.exports = function(grunt) {
             index: {
                 src: BUILD_DIR + "index.html",
                 dest: BUILD_DIR + "index.html",
-                data: function(){
+                data: function() {
                     return {
                         blogs: blogList
                     };
@@ -241,14 +241,27 @@ module.exports = function(grunt) {
             blogList = blogList.concat(f.src.map(function(filepath) {
 
                 var content = grunt.file.read(filepath);
+
+                var title = date = '';
+
                 var matches = content.match(/<h(\d) .*?>([\s\S]+?)<\/h\1>/);
                 if (!matches || !matches[2]) {
-                    return {};
+                    grunt.log.warn(filepath + ' has not TITLE.');
+                } else {
+                    title = matches[2];
+                }
+
+                matches = content.match(/@(201\d\-\d{1,2}\-\d{1,2})/);
+                if (!matches || !matches[1]) {
+                    grunt.log.warn(filepath + ' has not DATE.');
+                } else {
+                    date = matches[1];
                 }
 
                 return {
                     path: filepath.replace(/^web/, ''),
-                    title: matches[2]
+                    title: title,
+                    date: date
                 };
             }));
         });
@@ -257,7 +270,7 @@ module.exports = function(grunt) {
 
     grunt.registerMultiTask('swig', 'twig', function() {
         var data = this.data.data;
-        if('function'===typeof data){
+        if ('function' === typeof data) {
             data = data();
         }
         this.files.forEach(function(f) {

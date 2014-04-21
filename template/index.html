@@ -5,7 +5,7 @@
 <h4>我的博客列表：</h4>
 <ul>
         {%for blog in blogs%}
-    <li><a href="{{blog.path}}">{{blog.title}}</a></li>
+    <li><a href="{{blog.path}}">{{blog.title}}</a> <span>{{blog.date}}</span></li>
     {%endfor%}
 
 </ul>

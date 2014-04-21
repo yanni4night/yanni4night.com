@@ -1,1 +1,0 @@
-##native function in javascript
