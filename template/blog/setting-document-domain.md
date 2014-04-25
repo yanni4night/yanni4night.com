@@ -37,10 +37,11 @@
 
 |UA/host|google|www.google.com|10.11.202.231|
 |---|:---|:---:|---:|
-|Firefox(Mac/Windows)|![s.ff](/static/img/domain/s.ff.jpg)|![m.ff](/static/img/domain/m.ff.jpg)|![ip.ff](/static/img/domain/ip.ff.jpg)|
+|Firefox(Mac/Windows/Android)|![s.ff](/static/img/domain/s.ff.jpg)|![m.ff](/static/img/domain/m.ff.jpg)|![ip.ff](/static/img/domain/ip.ff.jpg)|
 |Safari(iOS/Mac/Windows)|![s.safari](/static/img/domain/s.ie8.jpg)|![m.safari](/static/img/domain/m.ie6.jpg)|![ip.safari](/static/img/domain/ip.safari.jpg)|
 |IE6~7|![s.ie67](/static/img/domain/s.ie8.jpg)|![m.ie67](/static/img/domain/m.ie6.jpg)|![ip.ie67](/static/img/domain/ip.ie6.jpg)|
 |Chrome(Mac,Windows)/IE8~10/Opera(presto内核,Mac/Windows)|![s.chrome-ie810-opera](/static/img/domain/s.ie8.jpg)|![m.chrome-ie810-opera](/static/img/domain/m.ie6.jpg)|![ip.chrome-ie810-opera](/static/img/domain/ip.ie8.jpg)|
+|IE(WP8)|无法打开|![m.chrome-ie810-opera](/static/img/domain/m.ie6.jpg)|![ip.chrome-ie810-opera](/static/img/domain/ip.ie8.jpg)|
 
 由上表可得出以下结论：
  - Firefox可以接受带 port 的父域名，但是任意 port 都会被忽略，其它浏览器则会报错；
@@ -100,7 +101,7 @@
     }
     
 
-因此即使是IP地址或是最后一节 `domain` 也会被允许设置。`Internet Explorer` 不开源，但可以猜测其对多节域名进行了最后一节域名限制，在 `IE8+` 上增加了IP地址限制。对于单节域名如 `http://hello/`，所有浏览器都一致性地允许设置，当然，这相当于设置 `domain` 为自身。
+因此即使是IP地址或是最后一节 `domain` 也会被允许设置。`Internet Explorer` 不开源，但可以猜测其对多节域名进行了最后一节域名限制，在 `IE8+` 上增加了IP地址限制。`Firefox` 在3.0版本增加了此限制。对于单节域名如 `http://hello/`，所有浏览器都一致性地允许设置，当然，这相当于设置 `domain` 为自身。
 
 Firefox浏览器忽略 `port` 的行为初衷不得而知，但可以测试该特性是在`3.0`版本上增加的。
 
@@ -146,7 +147,11 @@ Firefox浏览器忽略 `port` 的行为初衷不得而知，但可以测试该�
 
 >SecurityError: Failed to set the 'domain' property on 'Document': 'english.uk' is a top-level domain.
 
+这部分逻辑的一些代码来自 [Mozilla](http://www.mozilla.org) ，因此`Firefox` (3.0+)也具有同样的特性。
+
 截止今天(2014-04-24)，这个列表至少包含472个顶级域名，包括孟加拉国、文莱、库克群岛、塞浦路斯、厄立特里亚、埃塞俄比亚、斐济、马尔维纳斯群岛、关岛、以色列、牙买加、肯尼亚、柬埔寨、科威特、缅甸、莫桑比克、尼加拉瓜、尼泊尔、新西兰、巴布亚新几内亚、土耳其、英国、也门、南非、赞比亚、津巴布韦等国家和地区的顶级域名。想必这些国家的网站在设置 `document.domain` 时会遇到一些困难了:)。
+
+
 
 在对IE浏览器进行测试时，也发现了一些奇怪的事情。实验“aa.bb.cc.dd”域名，发现在 `IE8+` 下将不能设置 `document.domain` 为“cc.dd”。经过反复测试发现 `IE8+`在多节域名下允许设置 的双节域名中，两节单词中要至少有一个大于2个字母，换言之，下列域名都是不允许的：
  
@@ -161,6 +166,9 @@ Firefox浏览器忽略 `port` 的行为初衷不得而知，但可以测试该�
  - xxx.k
 
 暂不知微软用意为何，但可以联想到，新浪微博的短域名 `t.cn`在有下一级域名的情形下，将不能设置 `document.domain`为 `t.cn`。
+
+
+即便拥有上面的诸多问题，不过都属于特例，除了 `IE8+` 的短域名问题，其它基本都不会在日常的开发中遇到。
 
 ######参考
  1. <http://javascript.info/tutorial/same-origin-security-policy>
