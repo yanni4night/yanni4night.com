@@ -1,14 +1,12 @@
-/**
- * Gruntfile.js
- *
- * changelog
- * 2014-04-15[21:21:21]:created
- *
- * @info yinyong,osx-x64,UTF-8,10.129.173.56,js,/Volumes/yinyong/gamesubject/anheitulong
- * @author yanni4night@gmail.com
- * @version 0.0.1
- * @since 0.0.1
- */
+// Gruntfile.js
+// osx-x64,UTF-8,192.168.1.101,js,/Users/yinyong/work/yanni4night.com
+// by yanni4night@gmail.com,http://yanni4night.com
+//
+// Changelog
+// 2014-04-26[00:37:30]:created
+//
+// Version 0.1.0
+
 var fs = require('fs');
 var swig = require('swig');
 
