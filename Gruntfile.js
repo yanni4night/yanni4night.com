@@ -263,6 +263,17 @@ module.exports = function(grunt) {
                 };
             }));
         });
+        blogList.sort(function(q1,q2){
+            var d1= q1.date||"";
+            var d2= q2.date||"";
+            if(d1<d2){
+                return -1;
+            }else if(d1>d2){
+                return 1;
+            }else{
+                return 0;
+            }
+        });
     });
 
 
