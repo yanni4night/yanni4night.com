@@ -2,6 +2,7 @@
 
 @2014-04-29
 
+@keywords:document,nodelist,getElementsByName,getElementsByClassName,getElementsByTagName
 
 ######定义
 

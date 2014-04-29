@@ -19,6 +19,9 @@ module.exports = function(grunt) {
     const TPL_DIR = 'template/';
     const TMP_DIR = 'tmp/';
 
+    const HEAD_REG = /<h(\d) .*?>([\s\S]+?)<\/h\1>/;
+    const META_KEYWORDS_REG = /<meta\s+?name="keywords"\s+content="(.+?)"\/?>/;
+
     swig.setDefaults({
         loader: swig.loaders.fs(__dirname + '/' + TMP_DIR)
     });
@@ -170,6 +173,16 @@ module.exports = function(grunt) {
                 }]
             }
         },
+        keywords: {
+            all: {
+                files: [{
+                    expand: true,
+                    cwd: TMP_DIR,
+                    src: 'blog/**/*.html',
+                    dest: TMP_DIR
+                }]
+            }
+        },
         list: {
             all: {
                 src: [TMP_DIR + 'blog/**/*.html']
@@ -223,6 +236,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-markdown');
 
+    //Find the first head element(h1-h6) and inject to title
     grunt.registerMultiTask('title', 'add title', function() {
 
         this.files.forEach(function(f) {
@@ -235,13 +249,41 @@ module.exports = function(grunt) {
                 }
             }).map(function(filepath) {
                 var content = grunt.file.read(filepath);
-                var matches = content.match(/<h(\d) .*?>([\s\S]+?)<\/h\1>/);
+                var matches = content.match(HEAD_REG);
                 if (!matches || !matches[2]) return content;
                 return content.replace(/<title>[\s\S]+?<\/title>/, '<title>' + matches[2] + '    ——yanni4night.com</title>');
             }).join('');
 
             grunt.file.write(f.dest, src);
             grunt.log.writeln('File "' + f.dest + '" titled.');
+        });
+    });
+    
+    //Find keywords and append to meta
+    grunt.registerMultiTask('keywords', 'add keywords to meta', function() {
+
+        this.files.forEach(function(f) {
+            var src = f.src.filter(function(filepath) {
+                if (!grunt.file.exists(filepath)) {
+                    grunt.log.warn('Source file "' + filepath + '" not found.');
+                    return false;
+                } else {
+                    return true;
+                }
+            }).map(function(filepath) {
+                var content = grunt.file.read(filepath);
+                var matches = content.match(/@keywords?:([^\s<>]+)/);
+                if (!matches || !matches[1]) return content;
+                var words = matches[1].split(',').filter(function(n){return !!n.length;});
+                matches = content.match(META_KEYWORDS_REG);
+                if(!matches&&!matches[1]){
+                    return content;
+                }
+                return content.replace(META_KEYWORDS_REG, '<meta name="keywords" content="' + matches[1]+','+words.join() + '"/>');
+            }).join('');
+
+            grunt.file.write(f.dest, src);
+            grunt.log.writeln('File "' + f.dest + '" keyworded.');
         });
     });
 
@@ -254,7 +296,7 @@ module.exports = function(grunt) {
 
                 var title = date = '';
 
-                var matches = content.match(/<h(\d) .*?>([\s\S]+?)<\/h\1>/);
+                var matches = content.match(HEAD_REG);
                 if (!matches || !matches[2]) {
                     grunt.log.warn(filepath + ' has no TITLE.');
                 } else {
@@ -269,7 +311,7 @@ module.exports = function(grunt) {
                 }
 
                 return {
-                    path: filepath.replace(/^web/, ''),
+                    path: filepath.replace(new RegExp('^'+TMP_DIR), ''),
                     title: title,
                     date: date
                 };
@@ -317,8 +359,9 @@ module.exports = function(grunt) {
         'markdown', //md to html
         'list', //get list
         'swig', //render index&blog
-        'htmlmin', //min
         'title', //title
+        'keywords', //keywords
+        'htmlmin', //min
         'copy:blogs', //copy to build dir
         'stamp', //stamp for html&css
         'clean:tmp'//remove tmp

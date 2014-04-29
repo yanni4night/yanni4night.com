@@ -2,6 +2,8 @@
 
 @2014-04-23
 
+@keywords:document,domain,跨域
+
 在需要主子域跨域技术的应用场景中，父 frame 和子 frame 设置相同的 `document.domain` 是一种特别常用的方式，我们可以看见[腾讯](http://www.qq.com)公司的页面中很多都会有一句：
 
     document.domain = "qq.com";
@@ -44,9 +46,9 @@
 |IE(WP8)|无法打开|![m.chrome-ie810-opera](/static/img/domain/m.ie6.jpg)|![ip.chrome-ie810-opera](/static/img/domain/ip.ie8.jpg)|
 
 由上表可得出以下结论：
- - Firefox可以接受带 port 的父域名，但是任意 port 都会被忽略，其它浏览器则会报错；
- - 对于IP地址，IE6、IE7和Safari简单地将其当做为域名；
- - 仅Safari允许将 `domain` 设置为最后一节域名。
+ - Firefox 可以接受带 port 的父域名，但是任意 port 都会被忽略，其它浏览器则会报错；
+ - 对于 IP 地址，IE6、IE7 和 Safari 简单地将其当做为域名；
+ - 仅 Safari 允许将 `domain` 设置为最后一节域名。
 
  Safari 以及 国内几乎所有带 [webkit](http://www.webkit.org) 内核的浏览器 使用了一种相对简单的方式，即在字符串层面上新的 `domain` 是当前 `domain` 的“父域名”即可，可以从 [webkit](http://www.webkit.org) 中 `Document.cpp` 文件的源代码中看出：
     

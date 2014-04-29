@@ -2,6 +2,8 @@
 
 @2014-04-21
 
+@keywords:native,built-in,host-method
+
 Js中一些本地(native/built-in)对象和方法是可以重写的，比如在针对低版本浏览器的编程中，我们使用：
 
     Array.prototype.forEach = function(item,index,arr){
