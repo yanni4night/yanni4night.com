@@ -4,22 +4,27 @@
 //
 // Changelog
 // 2014-04-26[00:37:30]:created
+// 2014-04-29[21:48:57]:more clear grunt task flow
 //
-// Version 0.1.0
+// Version 0.1.1
 
 var fs = require('fs');
 var swig = require('swig');
 
 module.exports = function(grunt) {
 
+    const toulun = grunt.file.readJSON('_data/index.json');
     const STATIC_DIR = 'static/';
     const BUILD_DIR = 'web/';
+    const TPL_DIR = 'template/';
+    const TMP_DIR = 'tmp/';
+
     swig.setDefaults({
-        loader: swig.loaders.fs(__dirname + '/' + BUILD_DIR)
+        loader: swig.loaders.fs(__dirname + '/' + TMP_DIR)
     });
-    const toulun = grunt.file.readJSON('_data/index.json');
 
 
+    //Generate blog list
     var blogList = [];
 
     grunt.initConfig({
@@ -48,22 +53,12 @@ module.exports = function(grunt) {
                     cwd: STATIC_DIR,
                     src: ['**/*.less'],
                     ext: '.css',
-                    dest: BUILD_DIR + STATIC_DIR
-                }]
-            }
-        },
-        cssmin: {
-            merge: {
-                files: [{
-                    expand: true,
-                    cwd: BUILD_DIR,
-                    src: ['**/*.css'],
-                    dest: BUILD_DIR
+                    dest: TMP_DIR + STATIC_DIR
                 }]
             }
         },
         'regex-replace': {
-            stamp: {
+            variables: {
                 src: [BUILD_DIR + '**/*.html'],
                 actions: [{
                     name: '@',
@@ -76,11 +71,16 @@ module.exports = function(grunt) {
 
         },
         copy: {
-            html: {
-                //flatten: true,
+            tpl: {
                 expand: true,
-                cwd: 'template',
-                src: ['common/*.html', '*-parent.html', "index.html"],
+                cwd: TPL_DIR,
+                src: ["**/*"],
+                dest: TMP_DIR
+            },
+            blogs: {
+                expand: true,
+                cwd: TMP_DIR,
+                src: ['index.html', 'blog/**/*.html', 'static/**/*'],
                 dest: BUILD_DIR
             }
         },
@@ -90,13 +90,13 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: STATIC_DIR,
                     src: '**/*.{gif,png,jpg}',
-                    dest: BUILD_DIR + STATIC_DIR
+                    dest: TMP_DIR + STATIC_DIR
                 }]
             }
         },
         watch: {
             build: {
-                files: ['static/js/*.js', 'static/css/*.{less,css}', 'template/**/*.{md,html}', '_data/*.json', "lib/**/*"],
+                files: ['static/js/*.js', 'static/css/*.{less,css}', TPL_DIR + '**/*.{md,html}', '_data/*.json', "lib/**/*"],
                 tasks: ['default']
             }
         },
@@ -104,8 +104,8 @@ module.exports = function(grunt) {
             options: {
                 force: true
             },
-            built: [BUILD_DIR + "*", "**/._*"],
-            useless: ['web/common', 'web/*-parent.html']
+            tmp: [TMP_DIR],
+            built: [BUILD_DIR + "*", "**/._*"]
         },
         htmlmin: {
             options: {
@@ -115,10 +115,10 @@ module.exports = function(grunt) {
             html: {
                 files: [{
                     expand: true,
-                    cwd: BUILD_DIR,
+                    cwd: TMP_DIR,
                     src: '**/*.html',
                     ext: '.html',
-                    dest: BUILD_DIR
+                    dest: TMP_DIR
                 }]
             }
         },
@@ -126,11 +126,25 @@ module.exports = function(grunt) {
             options: {
                 baseDir: BUILD_DIR,
             },
-            index: {
+            html: {
+                options: {
+                    pattern: 'lis'
+                },
                 files: [{
                     expand: true,
                     cwd: BUILD_DIR,
-                    src: ['**/*.{html,css}'],
+                    src: ['**/*.html'],
+                    dest: BUILD_DIR
+                }]
+            },
+            css: {
+                options: {
+                    pattern: 'u'
+                },
+                files: [{
+                    expand: true,
+                    cwd: TMP_DIR,
+                    src: ['**/*.css'],
                     dest: BUILD_DIR
                 }]
             }
@@ -150,29 +164,29 @@ module.exports = function(grunt) {
             all: {
                 files: [{
                     expand: true,
-                    cwd: BUILD_DIR,
-                    src: '**/*.html',
-                    dest: BUILD_DIR
+                    cwd: TMP_DIR,
+                    src: 'blog/**/*.html',
+                    dest: TMP_DIR
                 }]
             }
         },
         list: {
             all: {
-                src: [BUILD_DIR + 'blog/**/*.html']
+                src: [TMP_DIR + 'blog/**/*.html']
             }
         },
         swig: {
             blog: {
                 files: [{
                     expand: true,
-                    cwd: BUILD_DIR,
+                    cwd: TMP_DIR,
                     src: 'blog/**/*.html',
-                    dest: BUILD_DIR
+                    dest: TMP_DIR
                 }]
             },
             index: {
-                src: BUILD_DIR + "index.html",
-                dest: BUILD_DIR + "index.html",
+                src: TMP_DIR + "index.html",
+                dest: TMP_DIR + "index.html",
                 data: function() {
                     return {
                         blogs: blogList
@@ -187,9 +201,9 @@ module.exports = function(grunt) {
             all: {
                 files: [{
                     expand: true,
-                    cwd: 'template',
+                    cwd: TMP_DIR,
                     src: 'blog/**/*.md',
-                    dest: BUILD_DIR,
+                    dest: TMP_DIR,
                     ext: '.html'
                 }]
             }
@@ -199,7 +213,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-regex-replace');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -209,7 +222,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-web-stamp');
     grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-markdown');
-    grunt.loadNpmTasks('grunt-shell');
 
     grunt.registerMultiTask('title', 'add title', function() {
 
@@ -229,8 +241,8 @@ module.exports = function(grunt) {
             }).join('');
 
             grunt.file.write(f.dest, src);
+            grunt.log.writeln('File "' + f.dest + '" titled.');
         });
-
     });
 
 
@@ -244,7 +256,7 @@ module.exports = function(grunt) {
 
                 var matches = content.match(/<h(\d) .*?>([\s\S]+?)<\/h\1>/);
                 if (!matches || !matches[2]) {
-                    grunt.log.warn(filepath + ' has not TITLE.');
+                    grunt.log.warn(filepath + ' has no TITLE.');
                 } else {
                     title = matches[2];
                 }
@@ -263,21 +275,23 @@ module.exports = function(grunt) {
                 };
             }));
         });
-        blogList.sort(function(q1,q2){
-            var d1= q1.date||"";
-            var d2= q2.date||"";
-            if(d1<d2){
+        //sort by date
+        blogList.sort(function(q1, q2) {
+            var d1 = q1.date || "";
+            var d2 = q2.date || "";
+            if (d1 < d2) {
                 return -1;
-            }else if(d1>d2){
+            } else if (d1 > d2) {
                 return 1;
-            }else{
+            } else {
                 return 0;
             }
         });
+        grunt.log.writeln('list got ' + blogList.length);
     });
 
 
-    grunt.registerMultiTask('swig', 'twig', function() {
+    grunt.registerMultiTask('swig', 'render html by twig', function() {
         var data = this.data.data;
         if ('function' === typeof data) {
             data = data();
@@ -285,7 +299,7 @@ module.exports = function(grunt) {
         this.files.forEach(function(f) {
 
             var src = f.src.map(function(filepath) {
-                var template = swig.compileFile(filepath.replace(BUILD_DIR, ''));
+                var template = swig.compileFile(filepath.replace(TMP_DIR, ''));
                 return template(data || {});
             }).join('');
 
@@ -296,6 +310,18 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('server', ['express']);
-    grunt.registerTask('default', ['clean:built', 'less', 'imagemin', 'copy', 'markdown', 'swig:blog', 'list', 'swig:index', 'clean:useless', 'stamp', 'htmlmin', 'title']);
-    grunt.registerTask('listfiles', ['list']);
+    grunt.registerTask('default', ['clean',
+        'less', //css to tmp
+        'imagemin', //images to tmp
+        'copy:tpl', //tpls to tmp
+        'markdown', //md to html
+        'list', //get list
+        'swig', //render index&blog
+        'htmlmin', //min
+        'title', //title
+        'copy:blogs', //copy to build dir
+        'stamp', //stamp for html&css
+        'clean:tmp'//remove tmp
+    ]);
+
 };
