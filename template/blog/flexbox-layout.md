@@ -85,7 +85,7 @@ HTML 代码为：
 
 `flex` 拥有`主轴`和`侧轴`的概念，可以简单地理解为 XY 坐标系。默认横向为 X 轴，纵向为 Y 轴。可以通过 `flex-direction` 作用于容器来改变设置。在主轴上子元素的对齐由 `justify-content` 控制，侧轴子元素对齐由 `align-items` 控制，同时还可以控制元素显示顺序的 `order`，相关具体意义及备选值可查看 [W3C 草案](http://www.w3.org/TR/css-flexbox-1/)。
 
-![flex](http://cdn.css-tricks.com/wp-content/uploads/2011/08/flexbox.png)
+![flex](/static/img/flex/flexbox.png)
 
 很不幸，`flex` 语法目前仍然处于[草案](http://www.w3.org/TR/css-flexbox-1/)阶段，并且经历了一次 `box` 旧语法的废弃————上面例子中的语法是最新的写法，从2009年开始各浏览器厂商陆续实现了一种现在被废弃的 `box` 语法，我们称之为老语法。更糟糕的是，微软的 IE10（包括桌面端和移动端）浏览器实现了一种介于新语法和旧语法之间的`中间语法`。下面的表格列举了这三种语法的API：
 
