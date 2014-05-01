@@ -21,7 +21,12 @@ a{
 .h-fil{
     height: 100%;
 }
-
+.cf::after,.cf::before{
+    content: '';
+    visibility: hidden;
+    clear: both;
+    display: block;
+}
 header{
 .content{
     .title{
@@ -31,6 +36,9 @@ header{
     font-family: 'cursive',arial,sans-serif;
     font-size: 40px;
     font-weight: 900;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
     }
     .little{
       @media screen and(max-width:@deviceWidth){

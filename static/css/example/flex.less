@@ -1,0 +1,161 @@
+@charset 'utf-8';
+
+
+html,body{
+    font: 14px/1.5 'simsun',arial,sans-serif;
+}
+
+/*old box syntax*/
+.box{
+    .f-f{
+        display:-webkit-box;
+        display:-moz-box;
+        display: box;
+    }
+    .f-h{
+        -webkit-box-orient:horizontal;
+        -moz-box-orient:horizontal;
+        box-orient:horizontal;
+    }
+    .f-v{
+        -webkit-box-orient:vertical;
+        -moz-box-orient:vertical;
+        box-orient:vertical;
+    }
+    .f-m{
+        -webkit-box-align:center;
+        -moz-box-align:center;
+        box-align:center;
+    }
+    .f-c {
+        -webkit-box-pack:center;
+        -moz-box-pack:center;
+        box-pack:center;
+    }
+    .f-r {
+        -webkit-box-pack:end;
+        -moz-box-pack:end;
+        box-pack:end;
+    }
+    .f-l {
+        -webkit-box-pack:start;
+        -moz-box-pack:start;
+        box-pack:start;
+    }
+    .f-j {
+        -webkit-box-pack:justify;
+        -moz-box-pack:justify;
+        box-pack:justify;
+    }
+    .f(@flex:1){
+       -webkit-box-flex:@flex;
+        -moz-box-flex:@flex;
+        box-flex:@flex; 
+    }
+    .f-1 {
+        .f(1);
+    }
+    .f-2 {
+        .f(2);
+    }
+    .f-3 {
+        .f(3);
+    }
+}
+/*IE10 middle syntax*/
+.flexbox{
+    .f-f {
+        display:-ms-flexbox;
+    }
+    .f-h{
+        -ms-flex-direction:row;
+    }
+    .f-v{
+        -webkit-flex-direction:column;
+        -moz-flex-direction:column;
+        flex-direction:column;
+    }
+    .f-m {
+        -ms-flex-line-pack:center;
+    }
+    .f-c {
+        -ms-flex-pack:center;
+    }
+    .f-r {
+        -ms-flex-pack:end;
+    }
+    .f-l {
+        -ms-flex-pack:start;
+    }
+    .f-j {
+        -ms-flex-pack:justify;
+    }
+    .f(@flex:1) {
+        -ms-flex:@flex;
+    }
+    .f-1{
+        .f(1);
+    }
+    .f-2{
+        .f(2);
+    }
+    .f-3{
+        .f(3);
+    }
+}
+/*new flex syntax*/
+.flex{
+    .f-f {
+        display:-webkit-flex;/*webkit*/
+        display:-moz-flex;/*old firefox*/
+        display:flex;/*firefox*/
+    }
+    .f-h{
+        -webkit-flex-direction:row;
+        -moz-flex-direction:row;
+        flex-direction:row;
+    }
+    .f-v{
+        -webkit-flex-direction:column;
+        -moz-flex-direction:column;
+        flex-direction:column;
+    }
+    .f-m {
+        -webkit-align-items:center;
+        -moz-align-items:center;
+        align-items:center
+    }
+    .f-c {
+        -webkit-justify-content:center;
+        -moz-justify-content:center;
+        justify-content:center
+    }
+    .f-r {
+        -webkit-justify-content:flex-end;
+        -moz-justify-content:flex-end;
+        justify-content:flex-end
+    }
+    .f-l {
+        -webkit-justify-content:flex-start;
+        -moz-justify-content:flex-start;
+    }
+    .f-j {
+        -webkit-justify-content:space-between;
+        -moz-justify-content:space-between;
+        justify-content:space-between
+    }
+    .f(@flex:1) {
+        -webkit-flex:@flex;
+        -moz-flex:@flex;
+        flex:@flex;
+    }
+    .f-1{
+        .f(1);
+    }
+    .f-2{
+        .f(2);
+    }
+    .f-3{
+        .f(3);
+    }
+}

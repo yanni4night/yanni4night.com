@@ -1,0 +1,140 @@
+{%extends "super-parent.html"%}
+
+{%block title%}
+Flex Demo
+{%endblock%}
+
+{%block head%}
+<link rel="stylesheet" href="/static/css/example/flex.css"/>
+<style type="text/css">
+.w-fil{width:100%;}
+.h-fil{height:100%;}
+.block{width:33%;float: left;}
+.flex-wra{background: #eee;width: 80%;margin: 10px 0;font-family: monospace;}
+.flex-wra-column{height: 120px; width: 50%;}
+.item{margin-right: 1px;margin-top:1px;background: #28b;}
+.item:last-child{margin-right: 0}
+.wrapper h2,.block h2{font-size: 20px;border: 0;}
+.block h3{font-size: 18px;}
+</style>
+{%endblock%}
+{%block wrapper%}
+  <h2 style="margin:10px 0;color:#28b;">UA:<script>document.write(navigator.userAgent);</script></h2>
+    {%set tips=['old safari&firefox&opera','chrome&safari&IE11','IE10']%}
+   {%for type in ['box','flex','flexbox']%}
+   <div class="block {{type}}" id="block-{{type}}">
+   <h2>{{type}}(for {{tips[loop.index0]}})</h2>
+        <h3>水平平均布局</h3>
+        <div class="f-f f-h f-c flex-wra">
+            <div class="f-1 item">WWWW</div>
+            <div class="f-1 item">WWWW</div>
+            <div class="f-1 item">WWWW</div>
+        </div>
+        <h3>水平布局-左对齐</h3>
+        <div class="f-f f-h f-l flex-wra">
+            <div class="f-f item">WWWW</div>
+            <div class="f-f item">WWWW</div>
+            <div class="f-f item">WWWW</div>
+        </div>
+        <h3>水平布局-右对齐</h3>
+        <div class="f-f f-h f-r flex-wra">
+            <div class="f-f item">WWWW</div>
+            <div class="f-f item">WWWW</div>
+            <div class="f-f item">WWWW</div>
+        </div>
+        <h3>水平布局-中心对齐</h3>
+        <div class="f-f f-h f-c flex-wra">
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+        </div>
+        <h3>水平布局-均分间隙</h3>
+        <div class="f-f f-h f-j flex-wra">
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+        </div>
+        <h3>水平平均布局-溢出</h3>
+        <div class="f-f f-h f-c flex-wra">
+            <div class="f-1 item">W</div>
+            <div class="f-1 item">WWWWWWWWWWWWWWWWWWWW</div>
+            <div class="f-1 item">WWWW</div>
+        </div>
+        <h3>水平非均布局(1:2:3)</h3>
+        <div class="f-f f-h f-c flex-wra">
+            <div class="f-1 item">WWWW</div>
+            <div class="f-2 item">WWWW</div>
+            <div class="f-3 item">WWWW</div>
+        </div>
+        <h3>水平非均布局(1:2:3)-溢出</h3>
+        <div class="f-f f-h f-c flex-wra">
+            <div class="f-1 item">W</div>
+            <div class="f-2 item">WWWWWWWWWWWWWWWWWWWW</div>
+            <div class="f-3 item">WWWW</div>
+        </div>
+        <h3>垂直平均布局</h3>
+        <div class="f-f f-v f-m flex-wra flex-wra-column">
+            <div class="f-1 item">WWWW</div>
+            <div class="f-1 item">WWWW</div>
+            <div class="f-1 item">WWWW</div>
+        </div>
+        <h3>垂直布局-上对齐</h3>
+        <div class="f-f f-v f-l flex-wra flex-wra-column">
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+        </div>
+        <h3>垂直布局-下对齐</h3>
+        <div class="f-f f-v f-r flex-wra flex-wra-column">
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+        </div>
+        <h3>垂直布局-中心对齐</h3>
+        <div class="f-f f-v f-c flex-wra flex-wra-column">
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+        </div>
+        <h3>垂直布局-均分间隙</h3>
+        <div class="f-f f-v f-j flex-wra flex-wra-column">
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+            <div class="item">WWWW</div>
+        </div>
+        <h3>垂直平均布局-溢出</h3>
+        <div class="f-f f-v f-m flex-wra flex-wra-column">
+            <div class="f-1 item">W</div>
+            <div class="f-1 item">WWWWWWWWWWWWWWWWWWWW</div>
+            <div class="f-1 item">WWWW</div>
+        </div>
+        <h3>垂直非均布局(1:2:3)</h3>
+        <div class="f-f f-v f-m flex-wra flex-wra-column">
+            <div class="f-1 item">WWWW</div>
+            <div class="f-2 item">WWWW</div>
+            <div class="f-3 item">WWWW</div>
+        </div>
+        <h3>垂直非均布局(1:2:3)-溢出</h3>
+        <div class="f-f f-v f-m flex-wra flex-wra-column">
+            <div class="f-1 item">W</div>
+            <div class="f-2 item">WWWWWWWWWWWWWWWWWWWW</div>
+            <div class="f-3 item">WWWW</div>
+        </div>
+    </div>
+   {%endfor%}
+<script>
+  function hideIE10(){
+    document.getElementById('block-flexbox').style.display='none';
+  }
+  var matches = navigator.userAgent.match(/MSIE (\d+)/);
+  if(matches&&matches[1])
+  { 
+    var version = +matches[1]|0;
+    if(10!==version){
+      hideIE10();
+    }
+  }else{
+    hideIE10();
+  }
+</script>
+{%endblock%}

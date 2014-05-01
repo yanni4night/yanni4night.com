@@ -83,7 +83,7 @@ module.exports = function(grunt) {
             blogs: {
                 expand: true,
                 cwd: TMP_DIR,
-                src: ['index.html', 'blog/**/*.html', 'static/**/*'],
+                src: ['index.html', '{blog,example}/**/*.html', 'static/**/*'],
                 dest: BUILD_DIR
             }
         },
@@ -197,6 +197,14 @@ module.exports = function(grunt) {
                     dest: TMP_DIR
                 }]
             },
+            example: {
+                files: [{
+                    expand: true,
+                    cwd: TMP_DIR,
+                    src: 'example/**/*.html',
+                    dest: TMP_DIR
+                }]
+            },
             index: {
                 src: TMP_DIR + "index.html",
                 dest: TMP_DIR + "index.html",
@@ -276,7 +284,7 @@ module.exports = function(grunt) {
                 if (!matches || !matches[1]) return content;
                 var words = matches[1].split(',').filter(function(n){return !!n.length;});
                 matches = content.match(META_KEYWORDS_REG);
-                if(!matches&&!matches[1]){
+                if(!matches||!matches[1]){
                     return content;
                 }
                 return content.replace(META_KEYWORDS_REG, '<meta name="keywords" content="' + matches[1]+','+words.join() + '"/>');
