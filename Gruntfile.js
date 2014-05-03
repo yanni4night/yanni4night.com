@@ -99,7 +99,7 @@ module.exports = function(grunt) {
         },
         watch: {
             build: {
-                files: ['static/js/*.js', 'static/css/*.{less,css}', TPL_DIR + '**/*.{md,html}', '_data/*.json', "lib/**/*"],
+                files: ['static/js/**/*.js', 'static/css/**/*.{less,css}', TPL_DIR + '**/*.{md,html}', '_data/*.json', "lib/**/*"],
                 tasks: ['default']
             }
         },
