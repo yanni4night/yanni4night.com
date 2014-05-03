@@ -1,9 +1,5 @@
 @charset 'utf-8';
 
-*{padding: 0;margin: 0;}
-html,body{
-
-}
 .column(@w){
     -webkit-columns:@w;
     -moz-columns:@w;
@@ -54,9 +50,20 @@ html,body{
     -moz-column-fill:@fill;
     column-fill:@fill;
 }
-
+h3{
+    background: #28b;
+    text-align: center;
+}
 article{
-    .column(3);
+    background: #ccc;
+    padding: 10px;
+    font-size: 12px;
+    margin-top: 10px;
+    line-height: 1.1;
+}
+
+article.columns{
+    .column(4 20em);
     .column-gap(3em);
     .column-rule-color(#eee);
     .column-rule-style(dashed);
@@ -67,10 +74,5 @@ article{
     }
     h3{
         .column-span(all);
-        background: #28b;
-        text-align: center;
     }
-    background: #ccc;
-    padding: 10px;
-
 }

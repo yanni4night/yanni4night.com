@@ -1,7 +1,7 @@
 {%extends "super-parent.html"%}
 
 {%block title%}
-Flex Demo
+CSS3 Multi-columns Demo
 {%endblock%}
 
 {%block head%}
@@ -9,13 +9,22 @@ Flex Demo
 {%endblock%}
 
 {%block wrapper%}
-    <article>
-        <h3>This H3 element should cross multi columns</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat 
-    nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
-    qui officia deserunt mollit anim id est laborum</p>
+
+{%for clz in ['','columns']%}
+    <article class="{{clz}}">
+        <h3>Why NATO is such a thorn in Russia's side</h3>
+<p>In a telephone call Monday between Russia's Defense Minister General Sergei Shoigu and the U.S. Secretary of Defence Chuck Hagel, Shoigu described the activity of U.S. and NATO troops near Russia's border as "unprecedented."
+According to the official Russian version of the call, his American counterpart assured him the alliance did not have "provocative or expansionist" intentions -- and that Russia should know this.
+But it hardly seems to matter how often NATO makes these assurances. The Kremlin will never trust them. Fear of the Western military alliance's steady march east is deep-rooted. It strikes at the very heart of Russia's national sense of security, a relic of Cold War enmity which has seeped down to post-Soviet generations.
+Ilya Saraev is a 15-year-old pupil at the First Moscow cadet school in Moscow. He thinks long and hard when I ask him about NATO. "I think NATO might be a friend to Russia but there's one point I don't understand: Why it needs to approach the border with Russia more and more," he says.
+     Russia fires back in word war with U.S. Separatists seize buildings in Ukraine
+Cadet school is an education in patriotism, like something from a bygone era. Besides the regular classes, there are lessons in ballroom dancing. Teenage cadets proudly leading local beauties through the waltz while outside their classmates rehearse the goosestep.
+After the takeover of Crimea, U.S. Secretary of State John Kerry accused Russia of behaving in a 19th century fashion in the 21st century. In some ways it's an epithet that seems to ring true here. The children are immaculately mannered and thoughtful. They write to their fellow cadets in Crimea. They say they feel sad there's this tension between brother nations -- Russia and Ukraine.
+"People still don't realize that war means despair and grief," says 16-year-old Vlad Voinakov. "They can't find a compromise because people's interests become involved and that's where the problem lies."
+Russia and NATO have never been able to find much of a compromise. Russia's repeated stance is that after German reunification, promises were made that NATO would never expand eastward -- and were promptly broken. NATO says this is simply not true. "No such pledge was made, and no evidence to back up Russia's claims has ever been produced," the alliance wrote in an April fact sheet entitled "Russia's accusations -- setting the record straight."
+NATO says it has tried hard to make Russia a "privileged partner." It has worked together with Russia on a range of issues from counter-terrorism and counter-narcotics to submarine rescue and emergency planning. NATO says that fundamentally Russia's anti-NATO rhetoric is an attempt to "divert attention away from its actions" in Ukraine. Now all cooperation is off the table.</p>
     </article>
+{%endfor%}
+
+
 {%endblock%}
