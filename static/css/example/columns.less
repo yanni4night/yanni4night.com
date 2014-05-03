@@ -1,0 +1,76 @@
+@charset 'utf-8';
+
+*{padding: 0;margin: 0;}
+html,body{
+
+}
+.column(@w){
+    -webkit-columns:@w;
+    -moz-columns:@w;
+    columns:@w;
+}
+.column-gap(@len){
+    -webkit-column-gap:@len;
+    -moz-column-gap:@len;
+    column-gap:@len;
+}
+.column-rule-color(@color){
+    -webkit-column-rule-color:@color;
+    -moz-column-rule-color:@color;
+    column-rule-color:@color;
+}
+.column-rule-style(@style:solid){
+    -webkit-column-rule-style:@style;
+    -moz-column-rule-style:@style;
+    column-rule-style:@style;
+}
+.column-rule-width(@width){
+    -webkit-column-rule-width:@width;
+    -moz-column-rule-width:@width;
+    column-rule-width:@width;
+}
+.break-before(@break){
+    -webkit-break-before:@break;
+    -moz-break-before:@break;
+    break-before:@break;
+}
+.break-after(@break){
+    -webkit-break-after:@break;
+    -moz-break-after:@break;
+    break-after:@break;
+}
+.break-inside(@break){
+    -webkit-break-inside:@break;
+    -moz-break-inside:@break;
+    break-inside:@break;
+}
+.column-span(@span){
+    -webkit-column-span:@span;
+    -moz-column-span:@span;
+    column-span:@span;
+}
+.column-fill(@fill:balance){
+    -webkit-column-fill:@fill;
+    -moz-column-fill:@fill;
+    column-fill:@fill;
+}
+
+article{
+    .column(3);
+    .column-gap(3em);
+    .column-rule-color(#eee);
+    .column-rule-style(dashed);
+    .column-rule-width(2);
+    .column-fill(auto);
+    p{
+        .break-inside(column);
+    }
+    h3{
+        .column-span(all);
+        background: #28b;
+        text-align: center;
+    }
+    background: #ccc;
+    padding: 10px;
+
+}
