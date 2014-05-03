@@ -2,10 +2,10 @@
 
 {%block wrapper%}
 
-<h4>我的博客列表：</h4>
+<h4>博客列表：</h4>
 <ul>
         {%for blog in blogs%}
-    <li><a href="{{blog.path}}">{{blog.title}}</a> <span>{{blog.date}}</span></li>
+    <li><a href="{{blog.path}}">{{blog.title}}</a> <span>[{{blog.date}}]</span></li>
     {%endfor%}
 
 </ul>

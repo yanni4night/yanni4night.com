@@ -15,10 +15,11 @@
         {%endblock%}
     </head>
     <body>
-    <header>
+{%block header%}
+<header>
 <div class="content">
             <a href="/" class="title" title="首页">Yanni Nightingale's Blog</a>
-            <span class="little">———— 雁过不留声</span>
+            <span class="little">雁过不留声</span>
 
             <pre>  
                                 《
@@ -29,7 +30,8 @@
                             《
             </pre>
 </div>
-    </header>
+</header>
+{%endblock%}
 
 <div class="wrapper cf">
 
@@ -41,7 +43,8 @@
     <footer class="w-fil">
         <div class="content">
             <span>&copy;2014  yanni4night All Rights Reserved</span> |
-            <a href="https://github.com/yanni4night" target="_blank">GitHub</a> | 
+            <a href="https://github.com/yanni4night" target="_blank">GitHub</a> |
+            <a href="/">Home</a> | 
             <script type="text/javascript">
             var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
             (/yanni4night\.com$/.test(location.host))&&document.write(unescape("%3Cspan id='cnzz_stat_icon_5882252'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D5882252%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
