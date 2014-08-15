@@ -131,7 +131,7 @@ module.exports = function(grunt) {
             },
             html: {
                 options: {
-                    pattern: 'lis'
+                    pattern: 'l|i|s'
                 },
                 files: [{
                     expand: true,
