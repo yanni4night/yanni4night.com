@@ -23,7 +23,7 @@ IE11 支持了完整的 `flex` 能力（参见[利用flexbox构建可伸缩布�
 
 UA中一直存在的 `MSIE` 被删除，依赖于此获取浏览器类型和版本号的代码将失效。要判断其类型和版本，必须 `MSIE` 和 `Trident` 共用了。
 
-溢出了 `attachEvent` ，以 `addEventListener` 取代之，这也会破坏使用该方法判断浏览器类型的代码。
+移除了 `attachEvent` ，以 `addEventListener` 取代之，这也会破坏使用该方法判断浏览器类型的代码。
 
 IE8 引入的 [XDomainRequest](http://msdn.microsoft.com/en-us/library/ie/cc288060.aspx) 被删除，取而代之的是支持跨域资源共享（[CORS](http://www.w3.org/TR/cors/)）的 `XMLHttpRequest`。
 
