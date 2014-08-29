@@ -36,7 +36,7 @@ module.exports = function(grunt) {
                 src: STATIC_DIR + 'js/**/*.js',
             }
         },
-        uglify: {
+        browserify: {
             compress: {
                 files: [{
                     expand: true,
@@ -232,7 +232,7 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-regex-replace');
     grunt.loadNpmTasks('grunt-contrib-less');
