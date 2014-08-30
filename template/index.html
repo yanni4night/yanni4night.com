@@ -1,9 +1,15 @@
 {%extends "super-parent.html"%}
 
+{%block head%}
+<style>
+    .bloglist li{height: 40px;line-height: 40px;border-bottom: 1px dashed #333;}
+    .bloglist li a{color:#333;}
+</style>
+{%endblock%}
 {%block wrapper%}
 
 <h4>Blog List：</h4>
-<ul>
+<ul class="bloglist">
         {%for blog in blogs%}
     <li><a href="{{blog.path}}">{{blog.title}}</a> <span>[{{blog.date}}]</span></li>
     {%endfor%}

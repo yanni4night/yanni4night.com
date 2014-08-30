@@ -12,25 +12,26 @@
         {%block head%}{%endblock%}
     </head>
     <body>
-
+<div class="body-inner">
 {%block header%}
-<header>
-<div class="content"><a href="/" class="title">Yanni Nightingale's Blog</a></div>
-</header>
+<div class="header">
+    <div class="content"><a href="/" class="title">Yanni Nightingale's Blog</a></div>
+</div>
 {%endblock%}
 
 <div class="wrapper cf">
 {%block wrapper%}{%endblock%}
 </div>
-<footer class="w-fil">
+<div class="footer w-fil">
     <div class="content">
-        <span>&copy;2014  <a href="/">yanni4night.com</a> All Rights Rese</span> |
+        <span>&copy;2014  <a href="/">yanni4night.com</a> All Rights Reserved</span> |
         <a href="https://github.com/yanni4night" target="_blank">GitHub</a> |
         <script type="text/javascript">
             var cnzz_protocol = (("https:" == document.location.protocol) https://" : " http://");
             (/yanni4night\.com$/.test(location.host))&&document.write(unescape("%3Cspan id='cnzz_stat_icon_5882252'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D5882252%26online%3D1%26show%3Dline' type='tjavascript'%3E%3C/script%3E"));</script>
     </div>
-</footer>
+</div>
+</div>
 {%block script%}{%endblock%}
 </body>
 </html>
