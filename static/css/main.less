@@ -1,15 +1,24 @@
 @charset 'utf-8';
-@contentWidth:1200px;
+@contentWidth:1000px;
 @deviceWidth:660px;
 *{padding: 0;margin: 0;}
+
+@font-face {
+    font-family: 'ink_in_the_meattial';
+    src: url('/static/fonts/inkitmt_-webfont.eot');
+    src: url('/static/fonts/inkitmt_-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/static/fonts/inkitmt_-webfont.woff') format('woff'),
+         url('/static/fonts/inkitmt_-webfont.ttf') format('truetype'),
+         url('/static/fonts/inkitmt_-webfont.svg#ink_in_the_meattial') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
 html,body{
-  @media screen and (max-width:@deviceWidth) {
-    font-size: 12px;
-  }
-font: 14px/1.2 'PFDin',arial,sans-serif;
-background: #f8f8f8;
-color:#333;
-word-break:break-word;
+    font: 14px/1.2 'PFDin',arial,sans-serif;
+    background: #f8f8f8;
+    color:#333;
+    word-break:break-word;
 }
 a{
     text-decoration: none;
@@ -28,45 +37,24 @@ a{
     display: block;
 }
 header{
-.content{
-    .title{
-    position: absolute;
-    top: 30px;
-    left: 10px;
-    font-family: 'cursive',arial,sans-serif;
-    font-size: 40px;
-    font-weight: 900;
-    color: #333;
-    text-decoration: none;
-    cursor: pointer;
-    }
-    .little{
-      @media screen and(max-width:@deviceWidth){
-        display: none;
-      }
-        position: absolute;
-        left: 513px;
-        top:100px;
-        font-size: 20px;
-    }
-    pre{
-        @media screen and (max-width:@contentWidth) {
-          display: none;
+    .content{
+        .title{
+            font-family:'ink_in_the_meattial','cursive',arial,sans-serif;
+            font-size: 100px;
+            font-weight: 900;
+            color: #333;
+            text-decoration: none;
+            line-height: 200px;
         }
-        position: absolute;
-        top: 20px;
-        right: 60px;
-    }
-    @media screen and (max-width:@contentWidth) {
-      width: 100%;
-    }
-    width: @contentWidth;
-    margin: 0 auto;
-    height: 100%;
-    position: relative;
-}
-        height: 200px;
+
+        width: @contentWidth;
         margin: 0 auto;
+        height: 100%;
+        text-align: center;
+        position: relative;
+    }
+    height: 200px;
+    margin: 0 auto;
 }
 
 .wrapper{
@@ -168,9 +156,6 @@ header{
         width: 300px;
         position: absolute;
         right: 0;top: 0;
-    }
-    @media screen and (max-width:@contentWidth) {
-        width: 100%;
     }
   color:#444;
   font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman',

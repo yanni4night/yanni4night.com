@@ -115,6 +115,10 @@ ECMAScript 规范规定了六种变量类型：null,undefined,string,number,bool
 
 在使用 `==` 进行操作之前，一定要明确两边值类型所带来的结果差异，必要时，直接强转为布尔值进行计算。
 
+#####测试
+
+[该页面](/example/==.html)展示了比较两个不同类型值得过程中所发生的事情。
+
 ####参考
 
 - <http://www.adequatelygood.com/Object-to-Primitive-Conversions-in-JavaScript.html>

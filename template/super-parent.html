@@ -1,54 +1,36 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head>
-        <meta charset="utf-8">
-        <title>
-            {%block title%}雁过不留声{%endblock%}
-        </title>
+        <meta charset="utf-8"/>
+        <title>{%block title%}Blog of Yanni Nightingale{%endblock%}</title>
         <meta id="viewport" name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         <meta name="format-detection" content="telephone=no"/> 
-        <meta name="keywords" content="Javascript,前端技术,w3c,js,css,html,nodejs,font-end,fe,ecma,dom"/>
+        <meta name="keywords" content="Javascript,前端,w3c,js,css,html,nodejs,font-end,fe,ecma,dom"/>
         <meta name="author" content="yanni4night@gmail.com"/>
         <link rel="stylesheet" href="/static/css/main.css"/>
-        {%block head%}
-        {%endblock%}
+        {%block head%}{%endblock%}
     </head>
     <body>
+
 {%block header%}
 <header>
-<div class="content">
-            <a href="/" class="title" title="首页">Yanni Nightingale's Blog</a>
-            <span class="little">雁过不留声</span>
-
-            <pre>  
-                                《
-                            《                               《
-                        《                           《
-                    《                       《
-                        《                       《
-                            《
-            </pre>
-</div>
+<div class="content"><a href="/" class="title">Yanni Nightingale's Blog</a></div>
 </header>
 {%endblock%}
 
 <div class="wrapper cf">
-
-{%block wrapper%}
-{%endblock%}
-
+{%block wrapper%}{%endblock%}
 </div>
-
-    <footer class="w-fil">
-        <div class="content">
-            <span>&copy;2014  yanni4night All Rights Reserved</span> |
-            <a href="https://github.com/yanni4night" target="_blank">GitHub</a> |
-            <a href="/">Home</a> | 
-            <script type="text/javascript">
-            var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-            (/yanni4night\.com$/.test(location.host))&&document.write(unescape("%3Cspan id='cnzz_stat_icon_5882252'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D5882252%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
-        </div>
-    </footer>
-    </body>
+<footer class="w-fil">
+    <div class="content">
+        <span>&copy;2014  <a href="/">yanni4night.com</a> All Rights Rese</span> |
+        <a href="https://github.com/yanni4night" target="_blank">GitHub</a> |
+        <script type="text/javascript">
+            var cnzz_protocol = (("https:" == document.location.protocol) https://" : " http://");
+            (/yanni4night\.com$/.test(location.host))&&document.write(unescape("%3Cspan id='cnzz_stat_icon_5882252'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D5882252%26online%3D1%26show%3Dline' type='tjavascript'%3E%3C/script%3E"));</script>
+    </div>
+</footer>
+{%block script%}{%endblock%}
+</body>
 </html>

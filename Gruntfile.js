@@ -80,6 +80,12 @@ module.exports = function(grunt) {
                 src: ["**/*"],
                 dest: TMP_DIR
             },
+            fonts:{
+                expand: true,
+                cwd: '.',
+                src: [STATIC_DIR+"fonts/*"],
+                dest: BUILD_DIR
+            },
             blogs: {
                 expand: true,
                 cwd: TMP_DIR,
@@ -259,7 +265,7 @@ module.exports = function(grunt) {
                 var content = grunt.file.read(filepath);
                 var matches = content.match(HEAD_REG);
                 if (!matches || !matches[2]) return content;
-                return content.replace(/<title>[\s\S]+?<\/title>/, '<title>' + matches[2] + '    ——yanni4night.com</title>');
+                return content.replace(/<title>[\s\S]+?<\/title>/, '<title>' + matches[2] + '</title>');
             }).join('');
 
             grunt.file.write(f.dest, src);
@@ -329,9 +335,9 @@ module.exports = function(grunt) {
         blogList.sort(function(q1, q2) {
             var d1 = q1.date || "";
             var d2 = q2.date || "";
-            if (d1 < d2) {
+            if (d1 > d2) {
                 return -1;
-            } else if (d1 > d2) {
+            } else if (d1 < d2) {
                 return 1;
             } else {
                 return 0;
@@ -363,14 +369,16 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['clean',
         'less', //css to tmp
         'imagemin', //images to tmp
+        'browserify',
         'copy:tpl', //tpls to tmp
         'markdown', //md to html
         'list', //get list
         'swig', //render index&blog
         'title', //title
         'keywords', //keywords
-        'htmlmin', //min
+        /*'htmlmin',*/ //min
         'copy:blogs', //copy to build dir
+        'copy:fonts',
         'stamp', //stamp for html&css
         'clean:tmp'//remove tmp
     ]);

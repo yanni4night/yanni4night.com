@@ -1,0 +1,39 @@
+{%extends "super-parent.html"%}
+
+{%block title%}"==" Test{%endblock%}
+
+{%block header%}{%endblock%}
+
+{%block head%}
+<style>
+.console{background-color: #333;color: #eee;padding: 1em;}
+.console p::before{content: '$ ';}
+.console p.ret{color:green;}
+.green{color: green}
+.red{color: red}
+textarea{display: block;width:700px;height: 80px;}
+button{padding: 0.5em 1em;}
+form div{margin: 5px 0;}
+</style>
+{%endblock%}
+
+{%block wrapper%}
+<form action="#" id="equalForm">
+    <div id="err" class="red"></div>
+    <div>
+        <label for="leftvalue">Left Variable</label>
+        <textarea id="leftvalue" placeholder="Any javascript type,like {a:1},[],true,2,'str',new Date()"></textarea>
+    </div>
+    <div>
+        <label for="rightvalue">Right Variable</label>
+        <textarea id="rightvalue" placeholder="Any javascript type,like {a:1},[],true,2,'str',new Date()"></textarea>
+    </div>
+    <div>
+        <button type="submit"> Do == </button>
+    </div>
+</form>
+<div class="console" id="console"></div>
+
+{%endblock%}
+
+{%block script%}<script src="/static/js/==.js"></script>{%endblock%}
