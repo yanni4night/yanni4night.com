@@ -376,7 +376,7 @@ module.exports = function(grunt) {
         'swig', //render index&blog
         'title', //title
         'keywords', //keywords
-        /*'htmlmin',*/ //min
+        'htmlmin', //min
         'copy:blogs', //copy to build dir
         'copy:fonts',
         'stamp', //stamp for html&css
