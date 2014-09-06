@@ -57,7 +57,7 @@ a{
             line-height: @headerHeight;
         }
 
-        width: @contentWidth;
+        /* width: @contentWidth; */
         height: 100%;
         text-align: center;
         position: relative;
@@ -87,18 +87,17 @@ a{
     
     p{
         margin:1em 0;
-        text-align: justify;
+        word-break: break-all;
     }
-    
     img{
-    max-width:100%;
+        max-width:100%;
     }
     
     h1,h2,h3,h4,h5,h6{
-    font-weight:normal;
-    color:#111;
-    line-height:1em;
-    margin: 0.5em 0;
+        font-weight:normal;
+        color:#111;
+        line-height:1em;
+        margin: 0.5em 0;
     }
     h4,h5,h6{ font-weight: bold; }
     h1{ font-size:2.5em; }
@@ -116,18 +115,24 @@ a{
     }
     hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
     
-    
     pre , code, kbd, samp { 
       color: #000; 
-      font-family: monospace; 
+      font-family: "Courier",monospace; 
       font-size: 0.88em; 
       border-radius:3px;
       background-color: #F8F8F8;
       border: 1px solid #CCC; 
     }
-    pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; padding: 5px 12px;}
-    pre code { border: 0px !important; padding: 0;}
-    code { padding: 0 3px 0 3px; }
+    pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; padding: 5px 12px;background: #333;color: cyan;}
+    pre code {
+        &::selection{color:cyan;}
+        border: 0px !important;
+        padding: 0;
+        color:#F8F8F8;
+        background: none;
+        font-size: 20px;
+    }
+    code { padding: 0 3px 0 3px;}
     
     b, strong { font-weight: bold; }
     
@@ -150,16 +155,11 @@ a{
     table { border-collapse: collapse; border-spacing: 0; }
     th,td { vertical-align: middle; border:1px solid #ddd;padding: 3px;text-align: center;word-break: break-word;}
     .content{
-        @media screen and (max-width:@contentWidth) {
-            width: auto;
-          }
         padding: 15px;
-        width: (@contentWidth - 300px);
+        /* width: (@contentWidth - 300px); */
     }
     .side{
-          @media screen and (max-width:@contentWidth) {
-           display: none;
-      }
+        display: none;
         width: 300px;
         position: absolute;
         right: 0;top: 0;
