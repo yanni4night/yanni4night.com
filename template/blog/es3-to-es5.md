@@ -1,4 +1,4 @@
-##ES3 to ES5(Forwarded)
+##ES3 to ES5(Extended)
 
 @2014-09-07
 
@@ -236,7 +236,7 @@ document.write('Test Result:' + (function (_NaN, _Infinity, _undefined) {
     })(NaN, Infinity));
 </script>
 
- - [15.1.2.1](http://www.ecma-international.org/ecma-262/5.1/#sec-15.1.2.1): Implementations are no longer permitted to restrict the use of eval in ways that are not a direct call. In addition, any invocation of eval that is not a direct call uses the global environment as its variable environment rather than the callerâ€™s variable environment. 
+ - [15.1.2.1](http://www.ecma-international.org/ecma-262/5.1/#sec-15.1.2.1): Implementations are no longer permitted to restrict the use of eval in ways that are not a direct call. In addition, any invocation of eval that is not a direct call uses the global environment as its variable environment rather than the caller's variable environment. 
 
     
     (function (global) {
@@ -330,7 +330,7 @@ document.write('Test Result:' + (function () {
     document.write('Test Result:' + !Function.propertyIsEnumerable('prototype'));
 </script>
 
- - [15.5.5.2](http://www.ecma-international.org/ecma-262/5.1/#sec-15.5.5.2): In Edition 5, the individual characters of a String objectâ€™s [[PrimitiveValue] may be accessed as array indexed properties of the String object. These properties are non-writable and non-configurable and shadow any inherited properties with the same names. In Edition 3, these properties did not exist and ECMAScript code could dynamically add and remove writable properties with such names and could access inherited properties with such names. 
+ - [15.5.5.2](http://www.ecma-international.org/ecma-262/5.1/#sec-15.5.5.2): In Edition 5, the individual characters of a String object's [[PrimitiveValue] may be accessed as array indexed properties of the String object. These properties are non-writable and non-configurable and shadow any inherited properties with the same names. In Edition 3, these properties did not exist and ECMAScript code could dynamically add and remove writable properties with such names and could access inherited properties with such names. 
 
     
     (function () {
@@ -354,6 +354,24 @@ document.write('Test Result:' + (function () {
 
  - [15.9.4.2](http://www.ecma-international.org/ecma-262/5.1/#sec-15.9.4.2): Date.parse is now required to first attempt to parse its argument as an ISO format string. Programs that use this format but depended upon implementation specific behaviour (including failure) may behave differently. 
 
+    
+    (function () {
+      try{
+        return !!Date.parse("2014-09-07T15:24:08.011Z");
+      }catch(e){
+        return false;
+      }
+    })();
+
+<script>
+document.write('Test Result:' + (function () {
+      try{
+        return !!Date.parse("2014-09-07T15:24:08.011Z");
+      }catch(e){
+        return false;
+      }
+    })());
+</script>
 
  - [15.10.2.12](http://www.ecma-international.org/ecma-262/5.1/#sec-15.10.2.12): In Edition 5, \s now additionally matches &lt;BOM&gt;. 
 
@@ -372,7 +390,7 @@ document.write('Test Result:' + (function () {
  - [15.10.4.1](http://www.ecma-international.org/ecma-262/5.1/#sec-15.10.4.1): In Edition 3, the exact form of the String value of the source property of an object created by the RegExp constructor is implementation defined. In Edition 5, the String must conform to certain specified requirements and hence may be different from that produced by an Edition 3 implementation. 
 
 
- - [15.10.6.4](http://www.ecma-international.org/ecma-262/5.1/#sec-15.10.6.4): In Edition 3, the result of RegExp.prototype.toString need not be derived from the value of the RegExp objectâ€™s source property. In Edition 5 the result must be derived from the source property in a specified manner and hence may be different from the result produced by an Edition 3 implementation. 
+ - [15.10.6.4](http://www.ecma-international.org/ecma-262/5.1/#sec-15.10.6.4): In Edition 3, the result of RegExp.prototype.toString need not be derived from the value of the RegExp object's source property. In Edition 5 the result must be derived from the source property in a specified manner and hence may be different from the result produced by an Edition 3 implementation. 
 
 
  - [15.11.2.1](http://www.ecma-international.org/ecma-262/5.1/#sec-15.11.2.1), [15.11.4.3](http://www.ecma-international.org/ecma-262/5.1/#sec-15.11.4.3): In Edition 5, if an initial value for the message property of an Error object is not specified via the Error constructor the initial value of the property is the empty String. In Edition 3, such an initial value is implementation defined.
@@ -429,18 +447,35 @@ From [Annex D](http://www.ecma-international.org/ecma-262/5.1/#sec-D):
 
  - [11.8.2](http://www.ecma-international.org/ecma-262/5.1/#sec-11.8.2), [11.8.3](http://www.ecma-international.org/ecma-262/5.1/#sec-11.8.3), [11.8.5](http://www.ecma-international.org/ecma-262/5.1/#sec-11.8.5): ECMAScript generally uses a left to right evaluation order, however the Edition 3 specification language for the > and <= operators resulted in a partial right to left order. The specification has been corrected for these operators such that it now specifies a full left to right evaluation order. However, this change of order is potentially observable if side-effects occur during the evaluation process. 
 
+    
+    (function(){
+      var i = 1, j = 1;
+      (i*=2) > 1 > (i+=1);
+      (j*=2) <= 1 <= (j+=1);
+      return 3 === i && 3 === j;
+    })();
+
+<script>
+document.write('Test Result:' + (function(){
+    var i = 1, j = 1;
+    (i*=2) > 1 > (i+=1);
+    (j*=2) <= 1 <= (j+=1);
+    return 3 === i && 3 === j;
+})());
+
+</script>
 
  - [11.1.4](http://www.ecma-international.org/ecma-262/5.1/#sec-11.1.4): Edition 5 clarifies the fact that a trailing comma at the end of an ArrayInitializer does not add to the length of the array. This is not a semantic change from Edition 3 but some implementations may have previously misinterpreted this. 
 
     
     (function () {
-        return [1,].length == 1;
+        return [1,].length === 1;
     })();
 
 
 <script>
 document.write('Test Result:' + (function () {
-        return [1,].length == 1;
+        return [1,].length === 1;
     })());
 </script>
 
@@ -450,7 +485,7 @@ document.write('Test Result:' + (function () {
  - [12.4](http://www.ecma-international.org/ecma-262/5.1/#sec-12.4): In Edition 3, an object is created, as if by new Object() to serve as the scope for resolving the name of the exception parameter passed to a catch clause of a try statement. If the actual exception object is a function and it is called from within the catch clause, the scope object will be passed as the this value of the call. The body of the function can then define new properties on its this value and those property names become visible identifiers bindings within the scope of the catch clause after the function returns. In Edition 5, when an exception parameter is called as a function, undefined is passed as the this value. 
 
 
- - [13](http://www.ecma-international.org/ecma-262/5.1/#sec-13): In Edition 3, the algorithm for the production FunctionExpression with an Identifier adds an object created as if by new Object() to the scope chain to serve as a scope for looking up the name of the function. The identifier resolution rules (Section 10.1.4 in Edition 3) when applied to such an object will, if necessary, follow the objectâ€™s prototype chain when attempting to resolve an identifier. This means all the properties of Object.prototype are visible as identifiers within that scope. In practice most implementations of Edition 3 have not implemented this semantics. Edition 5 changes the specified semantics by using a Declarative Environment Record to bind the name of the function. 
+ - [13](http://www.ecma-international.org/ecma-262/5.1/#sec-13): In Edition 3, the algorithm for the production FunctionExpression with an Identifier adds an object created as if by new Object() to the scope chain to serve as a scope for looking up the name of the function. The identifier resolution rules (Section 10.1.4 in Edition 3) when applied to such an object will, if necessary, follow the object's prototype chain when attempting to resolve an identifier. This means all the properties of Object.prototype are visible as identifiers within that scope. In practice most implementations of Edition 3 have not implemented this semantics. Edition 5 changes the specified semantics by using a Declarative Environment Record to bind the name of the function. 
 
 
  - [15.10.6](http://www.ecma-international.org/ecma-262/5.1/#sec-15.10.6): RegExp.prototype is now a RegExp object rather than an instance of Object. The value of its [[Class]] internal property which is observable using Object.prototype.toString is now "RegExp" rather than "Object".
