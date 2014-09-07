@@ -16,8 +16,8 @@
 
     var o = {
         a:1,//Data Property
-        set b:function(){},//Accessor Property
-        get c:function(){} //Accessor Property
+        set b(){},//Accessor Property
+        get c(){} //Accessor Property
     };
     o.d = 1;//Data Property
     o.__defineSetter('m', function(m){});//Accessor Property
