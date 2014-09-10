@@ -211,3 +211,61 @@ hgroup 中级别最高的标题才出现在提纲中
       </nav>
       <p>Copyright © 2009 Gordon Freeman</p>
     </footer>
+
+#####address 元素
+
+代表与最近的父级 article 或 body 关联的联系人信息
+
+    <address>
+      <a href="../People/Raggett/">Dave Raggett</a>,
+      <a href="../People/Arnaud/">Arnaud Le Hors</a>,
+      contact persons for the <a href="Activity">W3C HTML Activity</a>
+    </address>
+
+####分组内容 (grouping content)
+
+#####p 元素
+
+ - 「段落」的显式表述
+_段落是主题接近的若干句子组成的文本块 (via)_
+ -非优先考虑的选择
+_例如 address 的内容也是一个段落，但有更准确的语义_
+
+#####hr 元素
+
+ - 原意为「horizontal rule」(水平分隔线)
+ - HTML5 中重定义为不同主题内容间的分隔符
+ - 区块内容之间不需要用 hr 元素分隔
+
+#####pre 元素
+
+ - 表示已排版的内容
+ - 代码片段 / ASCII art / ...
+
+#####blockquote 元素
+
+ - 引用的来自其他来源的内容
+ - cite 属性表示该来源的 URL
+ - 署名必须放在 blockquote 外
+
+    
+    <p>His next piece was the aptly named <cite>Sonnet 130</cite>:</p>
+    <blockquote cite="http://quotes.example.org/s/sonnet130.html">
+      <p>My mistress' eyes are nothing like the sun,<br>
+      Coral is far more red, than her lips red,<br>
+      [...]</p>
+    </blockquote>
+
+#####ol, ul, li 元素
+
+ - 有序 / 无序列表
+ - 改变列表项顺序是否影响表达
+ - ol 下 li 元素的 value 属性代表该列表项的序号值
+
+    
+    <p>Relegation zone:</p>
+    <ol>
+        <li value="18">Bolton Wanderers</li>
+        <li>Blackburn Rovers</li>
+        <li>Wolverhampton Wanderers</li>
+    </ol>
