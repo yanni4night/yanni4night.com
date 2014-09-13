@@ -83,7 +83,7 @@ module.exports = function(grunt) {
             fonts:{
                 expand: true,
                 cwd: '.',
-                src: [STATIC_DIR+"fonts/*"],
+                src: [STATIC_DIR + "fonts/*"],
                 dest: BUILD_DIR
             },
             blogs: {
