@@ -35,7 +35,10 @@ ES5 中的 `hasOwnProperty` 需要访问一个内部方法：`GetOwnProperty`，
 
 ###### in
 
-`in` 操作符将调用内部方法 `HasProperty`，该方法递归搜索原型链，直到找到对应的成员。在 ES5 中，该方法还涉及另一个内部方法：`GetOwnProperty`。
+`in` 操作符只能用于对象而非简单类型，它调用内部方法 `HasProperty`，该方法递归搜索原型链，直到找到对应的成员。在 ES5 中，该方法还涉及另一个内部方法：`GetOwnProperty`。因此对于字符串，下面的表达式返回真：
+
+    
+    2 in new String('abc')
 
 
 
