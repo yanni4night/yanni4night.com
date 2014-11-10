@@ -122,6 +122,8 @@ Chrome，Safari，Opera，Firefox，IE10+，Android对可伸缩布局进行了�
 
 `flex` 在针对现在浏览器编程的环境中是一个很方便的工具，IE11 和 Firefox 现在已经实现了无前缀的语法，相信 [webkit](http://www.webkit.org/) 也会很快完成转换，届时新语法就会成熟，但老版本的 webkit 仍在存在很大的市场，因此在书写可伸缩 CSS 代码时仍然要兼容老语法，这会限制 `flex` 的应用。相对于普通的百分比计算方法，老语法提供的功能仍然足够日常使用。
 
+另外，可以使用 [autoprefixer](https://github.com/postcss/autoprefixer) 来自动屏蔽这三个版本之间的差异。
+
 ######参考
 
 - <http://dev.oupeng.com/articles/flexbox-basics>
