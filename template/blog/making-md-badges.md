@@ -21,15 +21,15 @@
 
 ####travis
 
-需要[登录](https://travis.ci/)并指定 repo ，用于自动显示构建状态。链接 <http://img.shields.io/travis/{user}/{repo}.svg>，如 ![Travis](http://img.shields.io/travis/yanni4night/urljoin.svg)。
+需要[登录](https://travis-ci.org/)并指定 repo ，用于自动显示构建状态。链接 <http://img.shields.io/travis/{user}/{repo}.svg>，如 ![Travis](http://img.shields.io/travis/yanni4night/urljoin.svg)。
 
 ####coveralls
 
-需要[登录](https://travis.ci/)并指定 repo 。链接 <http://img.shields.io/coveralls/{user}/{repo}/master.svg>，如 ![Coveralls](http://img.shields.io/coveralls/yanni4night/urljoin/master.svg)。
+需要[登录](https://coveralls.io/)并指定 repo 。链接 <http://img.shields.io/coveralls/{user}/{repo}/master.svg>，如 ![Coveralls](http://img.shields.io/coveralls/yanni4night/urljoin/master.svg)。
 
 ####appveyor
 
-需要[登录](https://travis.ci/)并指定 repo ，用于构建。链接 <https://ci.appveyor.com/api/projects/status/{repo-id}?svg=true>，如 ![Appveyor](https://ci.appveyor.com/api/projects/status/ildoo8h6ewphy8we?svg=true)。
+需要[登录](https://ci.appveyor.com/)并指定 repo ，用于构建。链接 <https://ci.appveyor.com/api/projects/status/{repo-id}?svg=true>，如 ![Appveyor](https://ci.appveyor.com/api/projects/status/ildoo8h6ewphy8we?svg=true)。
 
 <hr>
 
