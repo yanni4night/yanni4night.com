@@ -2,6 +2,9 @@
   "name": "yanni4night.com",
   "version": "0.1.1",
   "description": "Source files for yanni4night.com",
+  "scripts": {
+    "test": "grunt"
+  },
   "keywords": [
     "yanni4night.com"
   ],
@@ -9,19 +12,19 @@
   "license": "GPLv2",
   "devDependencies": {
     "express": "~3.4.5",
-    "grunt": "^0.4.4",
-    "grunt-browserify": "^3.0.0",
-    "grunt-contrib-clean": "^0.5.0",
+    "grunt": "~0.4.4",
+    "grunt-browserify": "~3.0.0",
+    "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-htmlmin": "^0.2.0",
+    "grunt-contrib-htmlmin": "~0.2.0",
     "grunt-contrib-imagemin": "~0.8.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-less": "^0.11.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-express-server": "^0.4.13",
-    "grunt-markdown": "^0.5.0",
-    "grunt-regex-replace": "^0.2.6",
-    "grunt-twig-render": "^1.0.1",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-less": "~0.11.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-express-server": "~0.4.13",
+    "grunt-markdown": "~0.5.0",
+    "grunt-regex-replace": "~0.2.6",
+    "grunt-twig-render": "~1.0.1",
     "grunt-web-stamp": "~0.2.3",
     "swig": "~1.3.2"
   }
