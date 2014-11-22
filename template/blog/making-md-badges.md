@@ -25,12 +25,18 @@
 
 ####coveralls
 
-需要[登录](https://coveralls.io/)并指定 repo 。链接 <http://img.shields.io/coveralls/{user}/{repo}/master.svg>，如 ![Coveralls](http://img.shields.io/coveralls/yanni4night/urljoin/master.svg)。
+需要[登录](https://coveralls.io/)并指定 repo ，配合测试框架显示覆盖度。链接 <http://img.shields.io/coveralls/{user}/{repo}/master.svg>，如 ![Coveralls](http://img.shields.io/coveralls/yanni4night/urljoin/master.svg)。
 
 ####appveyor
 
-需要[登录](https://ci.appveyor.com/)并指定 repo ，用于构建。链接 <https://ci.appveyor.com/api/projects/status/{repo-id}?svg=true>，如 ![Appveyor](https://ci.appveyor.com/api/projects/status/ildoo8h6ewphy8we?svg=true)。
+需要[登录](https://ci.appveyor.com/)并指定 repo ，用于在 Windows 环境进行构建。链接 <https://ci.appveyor.com/api/projects/status/{repo-id}?svg=true>，如 ![Appveyor](https://ci.appveyor.com/api/projects/status/ildoo8h6ewphy8we?svg=true)。
+
+####codeship
+
+类似于 travis ，同样用于自动构建，点此[登录](https://codeship.com/)，如![Build Status](https://codeship.com/projects/79da7240-5481-0132-ea32-42ab35009c21/status)。
 
 <hr>
 
 其实这些服务大多都使用了同一种徽标生成服务：<http://shields.io/>。可以随意创建自己的徽标：![yanni4night.com](http://img.shields.io/badge/yanni4night.com-ONLINE-brightgreen.svg)。
+
+<http://yanni4night.github.io/badge.html> 可快速生成所需徽标。
