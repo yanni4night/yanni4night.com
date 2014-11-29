@@ -26,6 +26,9 @@ module.exports = function(grunt) {
         loader: swig.loaders.fs(__dirname + '/' + TMP_DIR)
     });
 
+    (require('time-grunt'))(grunt);
+    (require('load-grunt-tasks'))(grunt);
+
 
     //Generate blog list
     var blogList = [];
@@ -114,7 +117,7 @@ module.exports = function(grunt) {
                 force: true
             },
             tmp: [TMP_DIR],
-            built: [BUILD_DIR + "*", "**/._*"]
+            built: [BUILD_DIR]
         },
         htmlmin: {
             options: {
@@ -236,19 +239,6 @@ module.exports = function(grunt) {
             }
         }
     });
-
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-browserify');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-regex-replace');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.loadNpmTasks('grunt-web-stamp');
-    grunt.loadNpmTasks('grunt-express-server');
-    grunt.loadNpmTasks('grunt-markdown');
 
     //Find the first head element(h1-h6) and inject to title
     grunt.registerMultiTask('title', 'add title', function() {
