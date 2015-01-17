@@ -22,6 +22,8 @@ module.exports = function(grunt) {
     const HEAD_REG = /<h(\d) .*?>([\s\S]+?)<\/h\1>/;
     const META_KEYWORDS_REG = /<meta\s+?name="keywords"\s+content="(.+?)"\/?>/;
 
+    const METRO_COLORS = ["greenlight", "green", "greendark", "magenta", "purplelight", "purple", "purpledark", "darken", "teal", "blue", "bluedark", "yellow", "orange", "orangedark", "red", "redlight"];
+
     swig.setDefaults({
         loader: swig.loaders.fs(__dirname + '/' + TMP_DIR)
     });
@@ -29,6 +31,11 @@ module.exports = function(grunt) {
     (require('time-grunt'))(grunt);
     (require('load-grunt-tasks'))(grunt);
 
+    var metroIndex = 0;
+
+    function randomMetroColor() {
+        return METRO_COLORS[metroIndex++ % METRO_COLORS.length];
+    }
 
     //Generate blog list
     var blogList = [];
@@ -83,7 +90,7 @@ module.exports = function(grunt) {
                 src: ["**/*"],
                 dest: TMP_DIR
             },
-            fonts:{
+            fonts: {
                 expand: true,
                 cwd: '.',
                 src: [STATIC_DIR + "fonts/*"],
@@ -199,6 +206,11 @@ module.exports = function(grunt) {
         },
         swig: {
             blog: {
+                data: function() {
+                    return {
+                        metro: randomMetroColor()
+                    };
+                },
                 files: [{
                     expand: true,
                     cwd: TMP_DIR,
@@ -262,7 +274,7 @@ module.exports = function(grunt) {
             grunt.log.writeln('File "' + f.dest + '" titled.');
         });
     });
-    
+
     //Find keywords and append to meta
     grunt.registerMultiTask('keywords', 'add keywords to meta', function() {
 
@@ -278,12 +290,14 @@ module.exports = function(grunt) {
                 var content = grunt.file.read(filepath);
                 var matches = content.match(/@keywords?:([^\s<>]+)/);
                 if (!matches || !matches[1]) return content;
-                var words = matches[1].split(',').filter(function(n){return !!n.length;});
+                var words = matches[1].split(',').filter(function(n) {
+                    return !!n.length;
+                });
                 matches = content.match(META_KEYWORDS_REG);
-                if(!matches||!matches[1]){
+                if (!matches || !matches[1]) {
                     return content;
                 }
-                return content.replace(META_KEYWORDS_REG, '<meta name="keywords" content="' + matches[1]+','+words.join() + '"/>');
+                return content.replace(META_KEYWORDS_REG, '<meta name="keywords" content="' + matches[1] + ',' + words.join() + '"/>');
             }).join('');
 
             grunt.file.write(f.dest, src);
@@ -315,7 +329,7 @@ module.exports = function(grunt) {
                 }
 
                 return {
-                    path: filepath.replace(new RegExp('^'+TMP_DIR), ''),
+                    path: filepath.replace(new RegExp('^' + TMP_DIR), ''),
                     title: title,
                     date: date
                 };
@@ -338,15 +352,17 @@ module.exports = function(grunt) {
 
 
     grunt.registerMultiTask('swig', 'render html by twig', function() {
-        var data = this.data.data;
-        if ('function' === typeof data) {
-            data = data();
-        }
+        var data = this.data;
+
         this.files.forEach(function(f) {
 
             var src = f.src.map(function(filepath) {
+                var payload = data.data;
+                if ('function' === typeof payload) {
+                    payload = payload(filepath);
+                }
                 var template = swig.compileFile(filepath.replace(TMP_DIR, ''));
-                return template(data || {});
+                return template(payload || {});
             }).join('');
 
             grunt.file.write(f.dest, src);
@@ -370,7 +386,7 @@ module.exports = function(grunt) {
         'copy:blogs', //copy to build dir
         'copy:fonts',
         'stamp', //stamp for html&css
-        'clean:tmp'//remove tmp
+        'clean:tmp' //remove tmp
     ]);
 
 };

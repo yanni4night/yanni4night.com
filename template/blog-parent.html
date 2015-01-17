@@ -1,13 +1,14 @@
-{%extends "super-parent.html"%}
+{% extends "super-parent.html" %}
 
-{%block wrapper%}
+{% block header %}{% endblock %}
+{% block wrapper %}
 
-    <article class="content" id="article">
-        {%block content%}
-                    
-        {%endblock%}
-        <div style='text-align:right;'><a href="#article">回顶部</a></div>
-                        <div id="disqus_thread"></div>
+    <article class="content metro-{%block metro%}{%endblock%}" id="article">
+        {%block content%}{%endblock%}
+        <div style='text-align:right;'>
+            <a href="#article">回顶部</a>
+        </div>
+        <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'yanni4night'; 
         (function() {
@@ -23,4 +24,4 @@
             </article>
             <section class="side">
             </section>
-{%endblock%}
+{% endblock %}
