@@ -1,5 +1,7 @@
 @charset 'utf-8';
 
+@import (inline) "reset.css";
+
 @contentWidth:960px;
 @deviceWidth:660px;
 @headerHeight:160px;
@@ -44,7 +46,10 @@ a{
     width: @contentWidth;
     margin: 0 auto;
     background-color: #f8f8f8;
-    padding: 0 20px;
+    padding-top: 1px;
+    @media screen and (max-width: @contentWidth) {
+        width: 100%;
+    }
 }
 .header{
     .content{
@@ -60,6 +65,9 @@ a{
         height: 100%;
         text-align: center;
         position: relative;
+    }
+    @media screen and (max-width: @contentWidth) {
+        display: none;
     }
     height: @headerHeight;
 }
@@ -154,8 +162,21 @@ a{
     th,td { vertical-align: middle; border:1px solid #ddd;padding: 3px;text-align: center;word-break: break-word;}
     .content{
         padding: 15px;
-        /* width: (@contentWidth - 300px); */
     }
+    
+    .bloglist{
+        li{
+           a{
+                color:#333;
+            }
+            line-height: 40px;
+            border-bottom: 1px dashed #333;
+            padding-left: 1em;
+        }
+        margin: 0;
+        padding: 0;
+    }
+
     .side{
         display: none;
         width: 300px;
@@ -167,8 +188,11 @@ a{
               "Hiragino Sans GB", "STXihei", "Microsoft YAHEI", serif;
   font-size:18px;
   line-height:1.5em;
-  width: @contentWidth;  
+  width: @contentWidth;
   position: relative;
+  @media screen and (max-width:@contentWidth){
+    width: 100%;
+  }
 }
 .footer{
     .content{
