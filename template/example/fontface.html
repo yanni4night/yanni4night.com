@@ -1,0 +1,30 @@
+{%extends "super-parent.html"%}
+
+{%block title%}FontFace Test{%endblock%}
+
+
+{%block header%}{%endblock%}
+
+{%block head%}
+<style>
+.font-hidden{
+    font-family: 'transformersregular';
+    visibility: hidden;
+}
+
+.font-none{
+    font-family: 'ink_in_the_meattial';
+    display: none;
+}
+</style>
+{%endblock%}
+
+{%block wrapper%}
+
+<div id="hidden-font" class="font-hidden">transformers regular</div>
+<button id="show-hidden" type="button">Show the element which is visibility-hidden</button>
+<div id="none-font" class="font-none">ink in the meattial</div>
+<button id="show-none" type="button">Show the element which is display-none</button>
+{%endblock%}
+
+{%block script%}<script src="/static/js/fontface.js"></script>{%endblock%}
