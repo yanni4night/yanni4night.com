@@ -40,6 +40,8 @@
 
 应尽量使用标准的日期字符串表示形式，ISO 对代码更友好。
 
+另外，在解析字符串格式日期时，假设的时区是不同的，ISO 是 UTC 时间，否则为当前时区。
+
 ##### 参考
 
  - <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse>
