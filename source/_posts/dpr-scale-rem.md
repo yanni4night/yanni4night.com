@@ -1,9 +1,10 @@
-title: 数学方法解释dpr/scale/rem三者的关系
+title: 数学方法解释 dpr/scale/rem 三者的关系
 date: 2015-12-30 16:59:04
 tags:
     - dpr
     - scale
     - rem
+    - viewport
 ---
 
 开发过移动端页面的同学一定听过 `dpr`、`scale`、`rem` 三个概念。最起码，也会用过 `scale`，如
@@ -16,37 +17,37 @@ tags:
 
 首先从需求讲起。
 
-移动端设备的屏幕尺寸千差万别，即便设计师能够提供每一种尺寸下的UE图，工程师也无法做到针对每种场景的适配。一般地，作为近似，在技术上可以使用媒体查询（media query）的方式将屏幕尺寸划分为几个等级，不同等级下使用不用的CSS样式。
+移动端设备的屏幕尺寸千差万别，即便设计师能够提供每一种尺寸下的 UE 图，工程师也无法做到针对每种场景的适配。一般地，作为近似，在技术上可以使用媒体查询（media query）的方式将屏幕尺寸划分为几个等级，不同等级下使用不用的CSS样式。
 
 但这显然不够精确，在不同设备上很难做到体验一致，不但代码难以维护，同时存在着被设计师吐槽的风险。
 
-如何在不同的屏幕上完美还原设计图，同时兼顾有限的人力时间？
+如何在不同的屏幕上完美还原设计图，同时兼顾有限的人力与时间？
 
-答案是：
- 1. 设计师只输出一套基准尺寸的UE图；
- 2. 通过页面缩放还原UE图的设计比例
+由此我们可以提出需求：
+ 1. 设计师只输出一套基准尺寸的 UE 图；
+ 2. 通过页面缩放还原 UE 图的设计比例
 
-这也有两种方案：
+这有两种方案：
  1. 使用 rem 为单位设置各个元素的尺寸；
- 2. 设定一个固定的页面宽度，所有元素可以使用px设定尺寸，然后缩放整个页面
+ 2. 设定一个固定的页面宽度，所有元素可以使用 px 设定尺寸，然后缩放整个页面
 
-我们分开来讲这两种方案。
+我们分开来讲讲这两种方案。
 
 ## 第一种方案，rem
 
-我们可以看到业界的大致方案是：
+我们经常看到业界的大致方案是：
 
 >将 `scale` 设置为 `1 / dpr`，`<html>` 的 `font-size` 计算为 `screen.width * dpr / >10`，然后在以 `less` 将UE图上得到的尺寸透明转换为对应的 `rem` 值。
 
-由于 `rem` 值都是比例值，因此能做到最终每个元素的尺寸相对于UE图的比例都和UE图一致。
+由于 `rem` 是比例值，因此能做到最终每个元素的尺寸相对于 UE 图的比例都是一致的。
 
 那么，问题是，上面的公式是怎么得到的？
 
 ### 分析
 
-我们来用最基本的数据公式推导一下。
+我们来用最基本的数据算式推导一下。
 
-设基准UE的图宽为 `ue_w`，`<html>` 的 `font-size` 值为 `ue_fs px`。
+设基准 UE 的图宽为 `ue_w`，`<html>` 的 `font-size` 值为 `ue_fs px`。
 
 在 PSD 上量得一个元素的宽度为 `psd_w px`，等于 `psd_rem`，即：
 
@@ -65,8 +66,8 @@ tags:
 其中 `psd_rem`、`ue_fs`、`foo_w`、`ue_w` 皆为已知，而 `foo_fs` 可给定一个具体值，相当于已知。
 
 ```css
-.px2rem(px){
-    px * (foo_w) / (foo_fs * ue_w) rem
+.px2rem(@px){
+    @px * (foo_w) / (foo_fs * ue_w) rem
 }
 ```
 
@@ -88,19 +89,19 @@ tags:
     
     foo_rem = 2.5 * (75 / 69) * (414 / 375) = 3rem = 3 * 69px = 414px / 2
 
-刚好也为屏幕的一半。因此，上面的 `LESS` 可以这样写：
+刚好也为屏幕的一半。因此，上面的 `LESS` 实际内容是：
 
 ```css
-.px2rem(px){
-    px * 0.016 rem
+.px2rem(@px){
+    @px * 0.016 rem
 }
 ```
 
-可见，实现与UE图等比的效果，只要取一个基准的 `ue_w`，一个基准的 `ue_fs`，并任取一个当前设备的 `foo_fs` 就可以了，跟什么 `dpr`、`scale` 根本没有关系。
+可见，实现与 UE 图等比例的效果，只要定一个基准的 `ue_w` 和一个基准的 `ue_fs`，并任取一个当前设备的 `foo_fs` 就可以了，跟什么 `dpr`、`scale` 根本没有关系。
 
 ### 事实
 
-如何根据屏幕宽度取一个合适的 `foo_fs` 呢？
+那么如何根据屏幕宽度取一个合适的 `foo_fs` 呢？
 
 再来看上面的(3)式，为了更精确的还原UE图，我们一定希望 `foo_rem` 和 `psd_rem` 都是有限小数，那么：
 
@@ -114,9 +115,7 @@ tags:
 
     foo_fs / foo_w
 
-最好都是有限小数。因此，只要取屏幕宽度的约数做 `foo_fs` 就可以了。
-
-因此，实际上，只要计算出一个约数即可，如 iPhone6 上的 75px，iPhone6 plus 上的 69px 等等。
+最好都是有限小数。因此，只要取屏幕宽度的___约数___做 `foo_fs` 就可以了，如 iPhone6 上的 75px，iPhone6 plus 上的 69px 等等。
 
 
 我们知道，在 `dpr` 大于1的设备上，是画不出来真正 1px 的，除非将 `scale` 设置成 `1 / dpr`。这样，`foo_w` 也会成倍增加：
@@ -137,7 +136,16 @@ tags:
 
 这就是为什么业界以(4)式计算 `foo_fs` 的缘由了。
 
-`rem` 的方案就讲到这里，已经用数学算式推导出了 `foo_fs` 的计算公式。
+`rem` 的方案就讲到这里，已经用数学算式推导出了 `foo_fs` 的计算公式(4)。
+
+核心代码参考：
+```javascript
+var dpr = window.devicePixelRatio;
+var meta = '<meta name="viewport" content="width=' + baseW + ", initial-scale=" + scale + ", maximum-scale=" + scale + ", minimum-scale=" + scale + ', user-scalable=no"/>';
+document.write(meta);
+var style = '<style tyle="text/css">html{font-size:' + (screen * dpr / 10) + 'px !important}</style>';
+document.write(style);
+```
 
 ## 第二种方案，scale
 
@@ -154,9 +162,9 @@ var meta = '<meta name="viewport" content="width=' + baseW + ", initial-scale=" 
 document.write(meta);
 ```
 
-不必再去计算 `foo_rem`、`foo_fs` 等参数。
+不必再去计算 `foo_rem`、`foo_fs` 等参数。由于 `scale` 并非等于 `1 / dpr`，因此1物理像素也就没法实现了。同时，`vw`、`vh` 的兼容也没有体现。好在它不需要转换 px 为 rem。
 
-## 结论
+## 对比
 
 比较上述两种方案：
 
@@ -168,3 +176,43 @@ document.write(meta);
 因此两种方案的使用场景是：
  1. 如果必须实现1物理像素，或者对 `vw/vh` 向后兼容，则使用方案一，代表有[淘宝](https://m.taobao.com/)；
  2. 如果开发环境不允许使用 `LESS` 等 CSS 预处理，则使用方案二开发会比较方便，代表有[百度H5](http://h5.baidu.com/)
+
+## 回归
+
+上述两个方案比较让人不爽的是都使用了 JavaScript 脚本来动态设置 `scale` 的大小。在苹果公司的原始设计中， `viewport` 是这样使用的么？
+
+参见 [Safari HTML Reference](https://developer.apple.com/library/iad/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html#//apple_ref/doc/uid/TP40008193-SW6)，`viewport` 允许开发者设置 width 来调整适配的目标设备宽度，但 
+
+    document.documentElement.clientWidth = Math.max(screen.width / scale, width)
+
+在前面两个方案中，width 等于 `screen.width`，`scale` 小于1，因此
+
+    document.documentElement.clientWidth = screen.width / scale = screen.width * dpr
+
+如果 `scale` 写死为1，自定义的 width 不能小于 `screen.width`。但一旦 width 大于 `screen.width`，就会出现滚动条，这时，JavaScript 动态计算的 `scale` 上场了。
+
+因此，按照苹果公司的设计初衷，没办法不使用 JavaScript 实现完美的 UE 还原。使用一份 UE 图，无法做到多个屏幕尺寸上呈现一致的效果。
+
+## 横屏
+
+移动端开发经常缺失的一个环节是，设计师很少提供横屏版的 UE。当手机屏幕横过来怎么办？
+
+可以监听 `resize`、`pageshow` 等事件，事件触发后，重新计算 `scale`、`foo_fs` 等值。这样能保证页面元素的比例仍与 UE 相当。
+
+有没有问题？
+
+水平方向上好像没什么问题。垂直方向呢？
+
+当整体页面按比例放大后，页面高度必然也会等比放大，而在横屏模式下，屏幕垂直高度又很小，从而导致大部分内容都被推出了首屏，体验和视觉上效果都不好。
+
+因此，元素的高度一般不是用 rem 而使用 px，除非元素尺寸与屏幕尺寸强相关。
+
+这是不是意味着所谓的完美还原是不切实际的？对于那种划页 H5， rem 的高度仍然试用，但对于普通的文本内容则不合适了。
+
+依据具体需求采取不同的方案。
+
+## 总结
+
+对于普通的需求，`width=device-width` 和 `scale=1` 就够了，虽然不能在不同的设备上展示同样的效果，但是够用。
+
+对展现要求稍高，则使用 JavaScript 动态计算 `scale` 和 `foo_fs`。
