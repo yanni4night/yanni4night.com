@@ -1,0 +1,6 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+<ShortName>yanni4night.com</ShortName>
+<Description>Search Yanni4night</Description>
+<Image width="16" height="16" type="image/x-icon">http://yanni4night.com/favicon.png</Image>
+<Url type="text/html" method="get" template="https://www.google.com/search?q={searchTerms}&amp;sitesearch=http%3A%2F%2Fyanni4night.com"/>
+</OpenSearchDescription>
