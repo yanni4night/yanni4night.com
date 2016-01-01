@@ -2,7 +2,7 @@
 menu:
   首页: /
   归档: /archives
-rss: /atom.xml
+rss:
 
 # Content
 excerpt_link: Read More
@@ -20,7 +20,7 @@ widgets:
 # Miscellaneous
 google_analytics:
 favicon: /favicon.png
-twitter:
-google_plus:
+twitter: yanni4night
+google_plus: yanni4night@gmail.com
 fb_admins:
 fb_app_id:
