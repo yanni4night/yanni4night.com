@@ -61,9 +61,7 @@ $fooRank.next();
 
 ```
 
-在这种场景下，`registerElement` 就是必须的了。因此,
-
->在不支持 `Custom Elements` 的浏览器上，polyfill 是不可能完全实现的。
+在这种场景下，`registerElement` 就是必须的了。因此，在不支持 `Custom Elements` 的浏览器上，polyfill 是不可能完全实现的。
 
 好了，现在我们实现的 `Custom Elements` 已经有了自定义方法，但还可能需要在内部添加一些固定的后代元素，比如，对于一个 Article 来讲，Header，Footer 就是固定的后代元素，而 Summary 则非。这时候，我们一般使用模板引擎，渲染后直接将 HTML 片段插入到 DOM 中进行解析和展现。`Webcomponents` 提供了原生的 _template_ 元素，预先解析了这部分 DOM，但并不展现，需要时，取出其后代元素的集合（DocumentFragment）：
 
@@ -81,9 +79,6 @@ $fooRank.next();
     document.querySelector('#rank').appendChild(template.content);
 </script>
 ```
-
-显然，
->template可以进行 polyfill
 
 如果自定义元素在创建时就已经拥有了固定的后代元素呢，该如何实现？
 
@@ -129,9 +124,6 @@ document.registerElement('wc-rank', {
 </script>
 ```
 
-除了 scope 外，
-> Shadow DOM 可以部分 polyfill
-
 这样，便以优雅的方式达到了定义自定义元素以及高效重用的目的。现在，将自定义元素的定义分离出去，维护在单独的文档中，这就是 `HTML Imports` 的用处之一。
 
 ```html
@@ -163,31 +155,143 @@ document.registerElement('wc-rank', {
     <h1>Hello</h1>
 </wc-rank>
 ```
-如果将 wc-rank.html 内容注入 index.html，
-> HTML Imports 可以 polyfill
 
-如此，四个 `Webcomponents` 的特性全部有了用武之地。它们都可以独立使用，但相互组合，才能实现优雅高效的组件化。
+如此，四个 `Webcomponents` 的特性全部有了用武之地：
 
-组件化的思路：
 
-```
-(语义化)->
-Custom Elements 
-()-> 
-Templates
-->
-Shadow DOM
-->
-HTML Imports
-```
+>(语义)->
+>Custom Elements 
+>(内容)-> 
+>Templates
+>(效率)->
+>Shadow DOM
+>(重用)->
+>HTML Imports
+
+
+它们都可以独立使用，但相互组合，更能实现优雅和高效的组件化。
+
+![](/images/webcomponents/webcomponents.png)
 
 ## Polyfill
 
- 由于目前仅 Chrome（Opera）实现了全部特性，因此 Polyfill 仍有存在的价值。
+ 由于目前仅 Chrome（Opera）实现了全部特性，因此 Polyfill 仍有存在一定的价值。下面几个项目都依赖了 [webcomponentsjs](https://github.com/WebComponents/webcomponentsjs)，但在 API 上有所不同。
 
 ### Polymer
+
+谷歌发起的项目。Polymer 使用 \<dom-module\> 标签来定义 `Custom Elements`：
+
+```html
+
+<!--Custom element defination-->
+<dom-module id="wc-rank">
+
+  <template>
+    <p>I'm a DOM element. This is my local DOM!</p>
+    <content select="footer"></content>
+  </template>
+
+  <script>
+    Polymer({
+      is: "wc-rank"
+    });
+  </script>
+
+</dom-module>
+
+<!--Custom element usage-->
+<wc-rank>
+    <footer>&copy;copyright</footer>
+</wc-rank>
+```
+
+内部同时声明了 `Templates` ，并使用 _shady_ DOM 类针对不支持 _shadow_ DOM 的浏览器。`HTML Imports` 也被支持。
+
+值得一提的是，Polymer 支持更复杂的 template，比如 __mustache__ 语法及 _dom-if_、_dom-repeat_ 指令，有点类似于 Angular 的 _ng-if_ 和 _ng-repeat_。
+
 ### X-tag
+
+微软支持的项目。X-tag 以纯 JavaScript 脚本声明 `Custom Elements`：
+
+```javascript
+xtag.register('wc-rank', {
+  content: function(){/*
+    ‹h2›My name is rank/h2›
+    ‹span›I work for a mad scientist‹/span›
+  */}
+});
+```
+
+X-tag 实现了 `Custom elements` 的生命周期回调，对 `HTML Imports`、`Templates` 和 `Shadow DOM`  没有明显的支持。
+
 ### Bosonic
+
+[Bosonic](http://bosonic.github.io/) 旨在构建一套低级的 UI 元素：即拿即用。
+
+```html
+<element name="wc-rank">
+    <template>
+        <span>I'm Shadow DOM</span>
+    </template>
+    <script>
+        Bosonic.register({
+            tip: function() {
+                var span = this.shadowRoot.querySelector('span');
+                span.textContent = 'Hello, world!';
+            }
+        });
+    </script>
+</element>
+
+<wc-rank></wc-rank>
+<script>
+    document.querySelector('wc-rank').tip();
+</script>
+```
+
 ### Rosetta
+
+[Rosetta](http://rosetta-org.github.io/) 是百度的一套 `Webcomponents` 解决方案，与上面三个项目最大的区别是在线下利用构建进行 polyfill，以提高运行时效率。
+
+```html
+<element name="r-slider">
+    <style>
+    </style>
+    <template>
+        <div>
+            {attrs.text}
+        </div>
+        <content select='.aaa'>
+        </content>
+    </template>
+    <script type="text/javascript">
+        Rosetta({
+            is: 'r-slider',
+            properties: {
+                list: {
+                    type: Array,
+                    value:[
+                        {
+                            title: '111'
+                            src: 'xxx'
+                        },
+                        {
+                            title: '222'
+                            src: 'zzz'
+                        }
+                    ]
+                },
+                text: {
+                    type: String,
+                    value: '测试'
+                }
+            }
+        });
+    </script>
+</element>
+```
+
+ API 上与 Polymer 如出一辙。 
+
 ## 参考
  - <http://webcomponents.org/>
