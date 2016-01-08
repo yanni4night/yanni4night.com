@@ -124,7 +124,7 @@ document.registerElement('wc-rank', {
 </script>
 ```
 
-这样，便以优雅的方式达到了定义自定义元素以及高效重用的目的。现在，将自定义元素的定义分离出去，维护在单独的文档中，这就是 `HTML Imports` 的用处之一。
+这样，便以优雅的方式达到了定义自定义元素以及高效重用的目的。现在，将 `Custom Elements` 的定义分离出去，维护在单独的文档中，这就是 `HTML Imports` 的用处之一。
 
 ```html
 <!-- wc-rank.html -->
@@ -179,7 +179,7 @@ document.registerElement('wc-rank', {
 
 ### Polymer
 
-谷歌发起的项目。Polymer 使用 \<dom-module\> 标签来定义 `Custom Elements`：
+谷歌发起的项目。Polymer 使用 < dom-module > 标签来定义 `Custom Elements`：
 
 ```html
 
@@ -205,13 +205,13 @@ document.registerElement('wc-rank', {
 </wc-rank>
 ```
 
-内部同时声明了 `Templates` ，并使用 _shady_ DOM 类针对不支持 _shadow_ DOM 的浏览器。`HTML Imports` 也被支持。
+内部同时声明了 `Templates` ，并使用 _shady_ DOM 来针对不支持 _shadow_ DOM 的浏览器。`HTML Imports` 也被支持。
 
 值得一提的是，Polymer 支持更复杂的 template，比如 __mustache__ 语法及 _dom-if_、_dom-repeat_ 指令，有点类似于 Angular 的 _ng-if_ 和 _ng-repeat_。
 
 ### X-tag
 
-微软支持的项目。X-tag 以纯 JavaScript 脚本声明 `Custom Elements`：
+[X-tag](x-tag.github.io) 是微软支持的项目。X-tag 以纯 JavaScript 脚本声明 `Custom Elements`：
 
 ```javascript
 xtag.register('wc-rank', {
@@ -291,7 +291,70 @@ X-tag 实现了 `Custom elements` 的生命周期回调，对 `HTML Imports`、`
 </element>
 ```
 
- API 上与 Polymer 如出一辙。 
+ API 与 Polymer 如出一辙。 
+
+## 扩展 
+
+换个角度，`Webcomponents` 目前在前端生产环境中使用还为时尚早，但其组织方式可以被服务端借鉴。试想，每个组件或者自定义元素都组织在私有的目录下：
+
+ - components
+     + wc-rank
+         * wc-rank.html
+         * wc-rank.js
+         * wc-rank.less
+     + wc-rank-content
+         * wc-rank-content.html
+         * wc-rank-content.js
+         * wc-rank-content.less
+
+将 `Custom Elements` 作为 __组件名__ 和 __组件引用指令__，如：
+
+```html
+<!--wc-rank.html-->
+<wc-rank>
+    <template>
+        <h1>This is a rank</h1>
+        <wc-rank-content></wc-rank-content>
+        <aside>Aside of rank</aside>
+    </template>
+</wc-rank>
+
+<!--wc-rank-content.html-->
+<wc-rank-content>
+    <template>
+        <content select="ul"></content>
+    </template>
+</wc-rank-content>
+
+<!--index.html-->
+<wc-rank>
+    <wc-rank-content>
+        <ul>
+            <li>First</li>
+            <li>Second</li>
+        </ul>
+    </wc-rank-content>
+</wc-rank>
+```
+
+那么最终输出可以是：
+
+```html
+<div is="wc-rank">
+    <h1>This is a rank</h1>
+    <div is="wc-rank">
+        <ul>
+            <li>First</li>
+            <li>Second</li>
+        </ul>
+    </div>
+    <aside>Aside of rank</aside>
+</div>
+```
+
+该过程完全可以在服务端完成，已经成为了一种简单的模板引擎。同时，如果需要执行 document.createElement('wc-rank') ，可以将 wc-rank.html 和 wc-rank-content.html 带到前端进行动态解析。
+
+接着，css 和 js 可以按照传统的方式进行依赖搜索和 combo。这样便将 `Webcomponents` 应用于服务端，并沿用组件化的思想和 `Webcomponents` 的草案 API，不失为前端工程化的一种解决方案。
 
 ## 参考
  - <http://webcomponents.org/>
