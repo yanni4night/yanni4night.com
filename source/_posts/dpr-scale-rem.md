@@ -162,32 +162,40 @@ var meta = '<meta name="viewport" content="width=' + baseW + ", initial-scale=" 
 document.write(meta);
 ```
 
+同时还必须要设置HTML的宽度:
+
+```css
+html {
+    width: 400px !important；
+}
+```
+
 不必再去计算 `foo_rem`、`foo_fs` 等参数。由于 `scale` 并非等于 `1 / dpr`，因此1物理像素也就没法实现了。同时，`vw`、`vh` 的兼容也没有体现。好在它不需要转换 px 为 rem。
 
 ## 对比
 
 比较上述两种方案：
 
-|方案|等比布局|1px|vw/vh|绝对定位|UE尺寸|
-|----|----|----|----|----|----|
-|第一种|✔|✔|✔|✔|LESS|
-|第二种|✔|✘|✘|✔|✔|
+|方案|等比布局|1物理像素|兼容vw/vh|绝对定位|UE尺寸|高清图|
+|----|----|----|----|----|----|----|
+|第一种|✔|✔|✔|✔|LESS|✔|
+|第二种|✔|✘|✘|✔|✔|有误差|
 
 因此两种方案的使用场景是：
- 1. 如果必须实现1物理像素，或者对 `vw/vh` 向后兼容，则使用方案一，代表有[淘宝](https://m.taobao.com/)；
- 2. 如果开发环境不允许使用 `LESS` 等 CSS 预处理，则使用方案二开发会比较方便，代表有[百度H5](http://h5.baidu.com/)
+ 1. 如果必须实现1物理像素，或者需要精确的高清图片，或者对 `vw/vh` 向后兼容，则使用方案一，代表有[淘宝](https://m.taobao.com/),，缺点是需要单位换算，也存在一定的误差；
+ 2. 预处理，或者需要精确的像素控制，则使用方案二开发会比较方便，代表有[百度H5](http://h5.baidu.com/)，缺点是不能实现1物理像素，也不能实现精确的高清图片
 
 ## 回归
 
 上述两个方案比较让人不爽的是都使用了 JavaScript 脚本来动态设置 `scale` 的大小。在苹果公司的原始设计中， `viewport` 是这样使用的么？
 
-参见 [Safari HTML Reference](https://developer.apple.com/library/iad/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html#//apple_ref/doc/uid/TP40008193-SW6)，`viewport` 允许开发者设置 width 来调整适配的目标设备宽度，但 
+参见 [Safari HTML Reference](https://developer.apple.com/library/iad/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html#//apple_ref/doc/uid/TP40008193-SW6)，`viewport` 允许开发者设置 width 来调整适配的目标设备宽度，但最终`document.documentElement.clientWidth`的值为
 
-    document.documentElement.clientWidth = Math.max(screen.width / scale, width)
+    document.documentElement.clientWidth === Math.max(screen.width / scale, width)
 
 在前面两个方案中，width 等于 `screen.width`，`scale` 小于1，因此
 
-    document.documentElement.clientWidth = screen.width / scale = screen.width * dpr
+    document.documentElement.clientWidth === screen.width / scale === screen.width * dpr
 
 如果 `scale` 写死为1，自定义的 width 不能小于 `screen.width`。但一旦 width 大于 `screen.width`，就会出现滚动条，这时，JavaScript 动态计算的 `scale` 上场了。
 
