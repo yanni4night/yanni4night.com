@@ -43,7 +43,9 @@ createStore(combineReducers({counter, status}));
 
 ## applyMiddleware
 
-一种 _store enhancer_，后续再讲。
+一种 _store enhancer_，使用 compose 来强化 createStore 的能力。这一个理解起来非常绕的函数。它允许对 createStore 进行多层包装，并修改了返回的 store 对象，可以在 dispatch 操作前后执行其它逻辑，有点类似 AOP 的感觉。事实上只要包装 dispatch 方法就能实现这些功能，也印证了 [Redux文档](http://cn.redux.js.org/docs/api/applyMiddleware.html) 的这句：
+
+_Middleware only wraps the store’s dispatch function. Technically, anything a middleware can do, you can do manually by wrapping every dispatch call, but it’s easier to manage this in a single place and define action transformations on the scale of the whole project._
 
 ## bindActionCreators
 
@@ -138,4 +140,4 @@ function compose () {
 
 除了 `Store` 对象的方法外，这五个 Redux 的核心函数中有三个为辅助函数，执行各种“魔法”操作，如果没有这些预定义的函数，可能会增加冗余代码量，但绝不会影响你实现 Flux。
 
-除了不十分常用的 `applyMiddleware` 之外，只有 `createStore` 为刚需函数，因此可见调用 Redux 并不复杂。这可能要联系到 Flux 架构这种单向的数据流转方式，对于解耦业务逻辑十分简单并且凑效。
+除了不十分常用并且仍可自实现的 `applyMiddleware` 之外，只有 `createStore` 为刚需函数，因此可见调用 Redux 并不复杂。这可能要联系到 Flux 架构这种单向的数据流转方式，对于解耦业务逻辑十分简单并且凑效。
