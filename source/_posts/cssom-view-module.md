@@ -11,48 +11,79 @@ tags:
 
 ## Window 接口
 
-###### innerWidth/innerHeight
+##### innerWidth/innerHeight
 
 浏览器窗口可见区的高宽，包括滚动条。
 
-###### outerWidth/outerHeight
+##### outerWidth/outerHeight
 
 浏览器窗口的外边沿宽高。
 
-###### scrollX/scrollY
+##### scrollX/scrollY
 
 文档水平/垂直滚动量。
 
-###### pageXOffset/pageYOffset
+##### pageXOffset/pageYOffset
 
 同上。
 
-###### screenX/screenY
+##### screenX/screenY
 
 浏览器左上角距离屏幕左上角的距离。
 
 ## Screen 接口
 
-###### availWidth/availHeight
+##### availWidth/availHeight
 
 屏幕可用区域的尺寸。
 
-###### width/height
+##### width/height
 
 屏幕整体尺寸。
 
 ## Element 接口
 
-###### scrollWidth/scrollHeight
 
-元素的实际尺寸，包括不可见部分。
+##### clientWidth/clientHeight
 
-###### clientWidth/clientHeight
+元素本身尺寸，包括 padding，但不包括 border、margin 和 scroll。
 
-不包括滚动条的可见部分。
+##### scrollWidth/scrollHeight
 
-###### clientTop/clientLeft
+元素的内容区域尺寸，包括隐藏的部分。如果没有隐藏部分，则等于 `clientWidth/clientHeight`。
+
+这一对值与该元素的后代元素相关，不管后代元素是否被隐藏(overflow 或  visibility)。
+
+##### clientTop/clientLeft
+
+元素内容与整个元素的位置偏移，理论上包括边框宽度与滚动条，由于一般滚动条都位于右下侧，因此这一对值基本上就是左侧和顶部边框的值。
+
+##### scrollTop/scrollLeft
+
+滚动条滚动的位移。
 
 
-###### offsetTop/offsetLeft
-###### offsetWidth/offsetHeight
+## HTMLElement 接口
+
+##### offsetWidth/offsetHeight
+
+元素本身尺寸，包括 padding、border，但不包括 margin 和 scroll。
+
+即：
+
+>offsetWidth = leftBorderWidth + clientWidth + rightBorderWidth
+>offsetHeight = leftBorderWidth + clientHeight + rightBorderWidth
+
+
+##### offsetTop/offsetLeft
+
+元素外边沿(border)与最近一个定位祖先元素外边沿的距离。
+
+
+------------
+
+## 图例
+
+![Legend](/images/cssom/legend.jpg)
+
+详见[这里](/example/cssom.html)。
