@@ -72,7 +72,11 @@ tags:
  >maxScrollTop = scrollHeight - clientHeight
  >maxScrollLeft = scrollWidth - clientWidth
 
-计算滚动条宽度：
+计算滚动条宽度的方法，对于浏览器最外层滚动条：
+
+>window.innerWidth - docment.documentElement.clientWidth
+
+对于普通元素：
 
 >offsetWidth - clientWidth - leftBorderWidth - rightBorderWidth
 
