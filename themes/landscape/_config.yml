@@ -18,7 +18,7 @@ widgets:
 - recent_posts
 
 # Miscellaneous
-google_analytics:
+google_analytics: UA-75674138-1
 favicon: /favicon.png
 twitter: yanni4night
 google_plus: yanni4night@gmail.com
